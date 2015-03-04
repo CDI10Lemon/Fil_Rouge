@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="RED_PRESENTATION">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="RED_ENTITY.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/RED_ENTITY/RED_ENTITY">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="RED_SERVICE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/RED_SERVICE/RED_SERVICE">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="RED_PRESENTATION"/>
+        <property name="java-output-path" value="/RED_PRESENTATION/build/classes"/>
+    </wb-module>
+</project-modules>
