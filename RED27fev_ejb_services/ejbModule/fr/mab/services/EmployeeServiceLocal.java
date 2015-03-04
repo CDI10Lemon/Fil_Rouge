@@ -8,7 +8,6 @@ import fr.mab.model.Employee;
 
 @Local
 public interface EmployeeServiceLocal {
-	
 	Employee findById(Employee employee);
 
 	List<Employee> findAll();

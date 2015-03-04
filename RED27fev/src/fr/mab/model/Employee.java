@@ -3,42 +3,45 @@ package fr.mab.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the "employee" database table.
  * 
  */
 @Entity
-@Table(name="employee")
-@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+@Table(name = "employee")
+@NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_employee")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_employee")
 	private int idEmployee;
 
-	@Column(name="id_category")
-	private int idCategory;
-
-	@Column(name="id_site")
-	private int idSite;
-
-	@Column(name="id_site_1")
-	private int idSite1;
-
-	@Column(name="id_structure")
-	private int idStructure;
-
-	@Column(name="lastname")
+	@Column(name = "lastname")
 	private String lastname;
 
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
 
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
+
+	@ManyToOne
+	@JoinColumn(name = "id_category")
+	private Category category;
+
+	@ManyToOne
+	@JoinColumn(name = "id_structure")
+	private Structure structure;
+
+	@ManyToOne
+	@JoinColumn(name = "id_site")
+	private Site site;
+
+	@ManyToOne
+	@JoinColumn(name = "id_site_1")
+	private Site site1;
 
 	public Employee() {
 	}
@@ -49,38 +52,6 @@ public class Employee implements Serializable {
 
 	public void setIdEmployee(int idEmployee) {
 		this.idEmployee = idEmployee;
-	}
-
-	public int getIdCategory() {
-		return this.idCategory;
-	}
-
-	public void setIdCategory(int idCategory) {
-		this.idCategory = idCategory;
-	}
-
-	public int getIdSite() {
-		return this.idSite;
-	}
-
-	public void setIdSite(int idSite) {
-		this.idSite = idSite;
-	}
-
-	public int getIdSite1() {
-		return this.idSite1;
-	}
-
-	public void setIdSite1(int idSite1) {
-		this.idSite1 = idSite1;
-	}
-
-	public int getIdStructure() {
-		return this.idStructure;
-	}
-
-	public void setIdStructure(int idStructure) {
-		this.idStructure = idStructure;
 	}
 
 	public String getLastname() {
@@ -107,4 +78,35 @@ public class Employee implements Serializable {
 		this.password = password;
 	}
 
+	public Category getCategory() {
+		return this.category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Structure getStructure() {
+		return this.structure;
+	}
+
+	public void setStructure(Structure structure) {
+		this.structure = structure;
+	}
+
+	public Site getSite() {
+		return this.site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public Site getSite1() {
+		return this.site1;
+	}
+
+	public void setSite1(Site site1) {
+		this.site = site1;
+	}
 }

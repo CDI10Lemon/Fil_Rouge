@@ -3,8 +3,6 @@
 	
 	<persistence-unit name="RED27fev" transaction-type="JTA">
 	<jta-data-source>java:/datasource/bdred</jta-data-source>
-		
-		<class>fr.mab.model.Employee</class>
 	</persistence-unit>
 
 </persistence>

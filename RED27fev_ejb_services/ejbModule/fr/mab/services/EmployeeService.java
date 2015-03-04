@@ -8,14 +8,20 @@ import javax.persistence.PersistenceContext;
 
 import fr.mab.model.Employee;
 
+/**
+ * Session Bean implementation class PersonneService
+ */
 @Stateless
 public class EmployeeService implements EmployeeServiceLocal {
 
 	@PersistenceContext
 	EntityManager entityManager;
 
+	/**
+	 * Default constructor.
+	 */
 	public EmployeeService() {
-
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
