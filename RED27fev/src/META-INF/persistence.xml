@@ -3,6 +3,19 @@
 	
 	<persistence-unit name="RED27fev" transaction-type="JTA">
 	<jta-data-source>java:/datasource/bdred</jta-data-source>
+		<class>fr.mab.model.Employee</class>
+		<class>fr.mab.model.Affectation</class>
+		<class>fr.mab.model.Category</class>
+		<class>fr.mab.model.District</class>
+		<class>fr.mab.model.Enduser</class>
+		<class>fr.mab.model.Exclude</class>
+		<class>fr.mab.model.Psc</class>
+		<class>fr.mab.model.Room</class>
+		<class>fr.mab.model.Site</class>
+		<class>fr.mab.model.Structure</class>
+		<class>fr.mab.model.Training</class>
+		<class>fr.mab.model.Unit</class>
+		<class>fr.mab.model.Visit</class>
 	</persistence-unit>
 
 </persistence>
