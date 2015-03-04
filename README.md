@@ -14,5 +14,5 @@ pa    : Back (JavaEE) Front: Angular,bootstrap
 Thomas: Back (JEE) + Front (JEE JSP)
 kadi:Back (JavaEE) + Front(HTML +(js + angular)
 
->>>>>>> 30df1743d0d3cb35a3babad8b499afad0464fdca
+
  
