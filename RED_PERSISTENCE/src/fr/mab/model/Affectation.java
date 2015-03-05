@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import java.sql.Time;
 import java.util.Date;
-
+/*Seb test */
 /**
  * The persistent class for the "affectation" database table.
  * 
