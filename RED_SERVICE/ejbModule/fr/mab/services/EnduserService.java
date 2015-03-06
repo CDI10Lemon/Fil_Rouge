@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import fr.mab.model.Employee;
 import fr.mab.model.Enduser;
 
 /**
