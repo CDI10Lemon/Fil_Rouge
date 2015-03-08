@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="cyberbase"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="description" content="Page Usagers cyberbase">
+	<meta name="author" content="Groupe_Lemon">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="images/lemon.ico">
+  <script type ="text/javascript" src="js/angular.min.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div class="container">
+   		<header id="header" class="page-header">
+   			<nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Postes</a>
+              <a class="navbar-brand" href="Usagers.html">Usagers</a>
+              <a class="navbar-brand" href="#">Statistiques</a>
+              <a class="navbar-brand" href="#">Salles</a>
+            </div>
+            <div id="titreHeader" class="nav navbar-nav">
+              <h3>CyberGest v1.0</h3>
+            </div>
+            <span id="btnDisconnect" class="nav navbar-nav navbar-right">
+              <button class="btn btn-sm btn-danger btn-block" type="submit">Déconnexion</button>
+            </span>
+            <div id="userHeader" class="nav navbar-nav navbar-right">
+              <div id="userHeader">
+                <span>user.avatar</span>
+                <span>user.firstname user.lastname</span>    
+              </div>    
+            </div>
+          </div>
+        </nav>
+      </header><!-- /header -->
+
+<!-- ********************************************************** Contenu ************************************************************************ -->
+
+      <aside id="blocUsagerG" class="col-md-2">
+        <form id="form_blocUsagerG" class="form-signin" role="search">
+          <div class="form-group">
+            <!-- Sélection usager -->
+            <h2>Sélectionner un usager</h2>
+            <input type="text" class="form-control" placeholder="Search...">
+            <textarea name="autoCompUsager" class="form-control"></textarea>
+            <!-- historique -->
+            <h2>Historique</h2>
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="afficher" onclick="">
+            <!-- exporter -->
+            <h2>Exporter la base des usagers</h2>
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="exporter" onclick="">
+          </div>
+        </form>
+      </aside>
+
+      <section id="blocPrincipal" class="col-md-10">
+        <form id="form_blocPrincipal" class="form-signin" role="search">
+          <div id="champCivilite">
+            <h2>Civilité :</h2>
+              <input type="radio" name="civilite" value="monsieur" id="monsieur"/>
+                <label for="monsieur">Monsieur</label>
+              <input type="radio" name="civilite" value="madame" id="madame"/>
+                <label for="madame">Madame</label>
+          </div>
+          <div id ="champNomPrenom">
+<!-- NOM -->
+            <label for "inputLastName">Nom</label>
+              <input type="text" class="form-control" name="inputLastName" id="inputLastName" placeholder="">
+<!-- PRENOM -->
+            <label for "inputFirstName">Prénom</label>
+              <input type="text" class="form-control" name="inputFirstName" id="inputFirstName" placeholder="">
+          </div>
+          <div id="champDateMail">
+<!-- DATE NAISSANCE -->
+            <label for "inputBirthday">Date de naissance</label>
+              <input type="date"name="inputBirthday" class="form-control">
+<!-- EMAIL --> 
+            <label for "inputEmail">Courriel</label>
+              <input type="email" class="form-control" name="inputEmail"" id="inputEmail"" placeholder="">
+          </div>
+          <div id="champInscription">
+<!-- SITE INSCRIPTION -->
+            <label for "inputInscriptionSite">Site d'inscription</label>
+              <input type="text" class="form-control" name="inputInscriptionSite" id="inputInscriptionSite" placeholder="">
+<!-- DATE INSCRIPTION --> 
+            <label for "inputInscriptionDate">Date d'inscription</label>
+              <input type="date"name="inputInscriptionDate" class="form-control">
+          </div>
+          <div id="champInfos">
+<!-- NIVEAU DE FORMATION -->
+            <label for="studies">Niveaux de formation</label>
+              <select name="studies" id="studies" class="form-control">
+                <option value="six">Niveau VI et V bis</option>
+                <option value="five">Niveau V - CAP et BEP</option>
+                <option value="four">Niveau IV - Bac</option>
+                <option value="three">Niveau III - Bac +2</option>
+                <option value="two">Niveau II - Bac +3/4</option>
+                <option value="one">Niveau I - Bac +5/+8</option>
+              </select>
+<!-- CSP -->
+            <label for="sec">CSP</label>
+              <select name="sec" id="sec" class="form-control">
+                <option value="agriculteurs">Agriculteurs exploitants</option>
+                <option value="artisans">Artisans, commerçants et chefs d’entreprise</option>
+                <option value="cadres">Cadres et professions intellectuelles supérieures</option>
+                <option value="intermediaires">Professions Intermédiaires</option>
+                <option value="employes">Employés</option>
+                <option value="ouvriers">Ouvriers</option>
+              </select>
+<!-- QUARTIER -->
+            <label for="districts">Quartiers</label>
+              <select name="districts" id="districts" class="form-control">
+                <option value="centre">Centre-ville</option>
+                <option value="chantenay">Bellevue - Chantenay - Ste Anne</option>
+                <option value="zola">Dervallières - Zola</option>
+                <option value="felix">Hauts-Pavés - St Félix</option>
+
+                <option value="donatien">Malakoff - St Donatien</option>
+                <option value="ile">Île de Nantes</option>
+                <option value="breil">Breil - Barberie</option>
+                <option value="nord">Nantes Nord</option>
+                <option value="erdre">Nantes Erdre</option>
+                <option value="doulon">Doulon - Bottière</option>
+                <option value="sud">Nantes Sud</option>
+              </select>
+<!-- CODE POSTAL -->
+            <label for "inputZipCode">Code postal</label>
+              <input type="number"name="inputZipCode">            
+          </div>
+          <div id="checkMissionLocale">
+<!-- Accompagné par la mission locale -->
+            <input type="checkbox" name="accMissionLocale" id="accMissionLocale"/>
+              <h5>Accompagné(e) par la mission locale</h5>
+          </div>
+          <div id="exclusion">
+<!-- Exclusion -->
+            <div> 
+              <h2>Exclusion</h2>
+            </div>
+            <span class="checkExclusion">
+              <input type="checkbox" name="exclusionDefinitive" id="exclusionDefinitive">
+              <h5>Définitive</h5>
+            </span>
+            <span class="checkExclusion">
+              <input type="checkbox" name="exclusionTemporaire" id="exclusionTemporaire"/>
+              <h5>Temporaire</h5>
+            </span>
+            <span id="dateExclusion">
+              <input type="date" name="exclusionTemporaireDate" class="form-control">
+            </span>
+          </div>
+          <div id="btnsUsagers">
+            <input type="button" class="btn btn-lg btn-danger btn-block" value="supprimer" onclick="">
+            <input type="button" class="btn btn-lg btn-warning btn-block" value="modifier" onclick="">
+            <input type="button" class="btn btn-lg btn-success btn-block" value="créer" onclick="">
+          </div>
+        </form>
+      </section>
+    <footer class="footer">
+      <div class="container">
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+        </span>
+        <span class="footerLink"> | </span>
+        <span id="mentionLink">
+          <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+        </span>
+        <span class="divider"> | </span>
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+        </span>
+      </div>
+    </footer>
+</div> <!-- /container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Angular app -->
+<script src="js/cyberbase.js"></script>
+</body>
+</html>
