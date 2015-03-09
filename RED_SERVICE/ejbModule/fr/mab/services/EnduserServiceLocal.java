@@ -4,12 +4,11 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import fr.mab.model.Employee;
 import fr.mab.model.Enduser;
 
 @Local
 public interface EnduserServiceLocal {
-	Enduser findById(Enduser user);
+	Enduser findById(Enduser enduser);
 	
 	List<Enduser> findAll();
 	
