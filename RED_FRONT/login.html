@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="cyberbase"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="description" content="Page de login à la cyberbase">
+	<meta name="author" content="Groupe_Lemon">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="images/lemon.ico">
+	<script type="text/javascript" src="js/angular.min.js"></script>
+</head>
+<body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+
+            <div class="container">
+            	<div class="jumbotron">
+            		<section id="blocLogin">
+            			<div id="logo">
+            				<img src="images/cyberbaselogo_login.jpg" alt="Logo Cyberbase" width="400px;" height="145px;">
+            			</div>
+            		
+            				<form class="form-signin" id="formLogin" name="formLogin">	  	
+	            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname">
+
+	            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name">
+
+	            				<div class="control-group">
+	            					<div class="controls">
+	            						<select id="siteRef" class="form-control">
+	            							<option value="0">Site de référence</option>
+	            							<option value="1">Site 1</option>
+	            							<option value="2">Site 2</option>
+	            							<option value="3">Site 3</option>
+	            							<option value="4">Site 4</option>
+	            							<option value="5">Site 5</option>
+	            							<option value="6">Site 6</option>
+	            							<option value="7">Site 7</option>
+	            							<option value="8">Site 8</option>
+	            						</select>
+	            					</div>
+	            				</div>
+
+	            				<div class="control-group">
+	            					<div class="controls">
+	            						<select id="structure" class="form-control">
+	            							<option value="0">Structure d'appartenance</option>
+	            							<option value="1">Pôle Emploi</option>
+	            							<option value="2">APEC</option>
+	            							<option value="3">Mission Locale</option>
+	            						</select>
+	            					</div>
+	            				</div>
+	            			<div class="form-group" ng-class="{'has-error' : formLogin.$dirty && formLogin.Password.$invalid,'has-success' : formLogin.Password.$valid}">
+	            				<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
+	            				<span class="text-danger" ng-show="registerForm.Password.$error.minlength">
+	   								 Doit contenir au minimum 4 caractères
+								</span>
+
+	            				<span id="btnRaz" class="bouton">
+	            					<button class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button">RAZ</button>
+	            				</span>
+	            				<span id="btnConnect" class="bouton">
+	            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid">Se connecter</button>
+	            				</span>
+            				</form>
+            			
+            		</section>
+            	</div><!-- jumbotron -->
+            	<footer class="footer">
+            		<div class="container">
+            			<span class="footerLink">
+            				<a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+            			</span>
+            			<span class="footerLink"> | </span>
+            			<span id="mentionLink">
+            				<a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+            			</span>
+            			<span class="divider"> | </span>
+            			<span class="footerLink">
+            				<a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+            			</span>
+            		</div>
+            	</footer>
+            </div> <!-- /container -->
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-1.11.2.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Angular app -->
+            <script src="js/cyberbase.js"></script>
+            <script src="js/loginCtrl.js"></script>
+        </body>
+        </html>
