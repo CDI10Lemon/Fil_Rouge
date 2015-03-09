@@ -22,12 +22,13 @@ public class Unit implements Serializable {
 	@Column(name = "number")
 	private String number;
 
-	@Column(name = "state")
-	private String state;
-
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "id_room")
 	private Room room;
+	
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "id_availability")
+	private Availability availability;
 
 	public Unit() {
 	}
@@ -48,12 +49,12 @@ public class Unit implements Serializable {
 		this.number = number;
 	}
 
-	public String getState() {
-		return this.state;
+	public Availability getAvailability() {
+		return this.availability;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setAvailability(Availability availability) {
+		this.availability = availability;
 	}
 
 	public Room getRoom() {
