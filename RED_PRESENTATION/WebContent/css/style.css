@@ -1,0 +1,53 @@
+/* global */
+body{
+	margin:0;
+}
+/* ------------------------------------ login.html ---------------------------------------------- */
+/* placement section */
+#blocLogin{
+	width:500px;
+	background-color: #fff;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	border:1px solid #efefef;
+	box-shadow: 1px 2px 25px #a5a5a5;
+}
+/* placement logo  */
+#logo{
+	display:block;
+	text-align: center;
+	margin-top:10px;
+	margin-bottom:20px;
+}
+/* placement dans formulaire */
+#formLogin{
+	margin:75px;
+}
+.form-control{
+	margin-top:20px;
+}
+#siteRef{
+	margin-top:40px;
+}
+#structure{
+	margin-bottom: 40px;
+}
+/* placement boutons dans formulaire */
+.bouton{
+	display:inline-block;
+	margin-top: 60px;
+}
+#btnRaz{
+	margin-right:130px;
+}
+
+/* ------------------------------------ patron_header_footer.html ---------------------------------------------- */
+
+#titreHeader{
+	margin-left:345px;
+}
+.navbar-right~.navbar-right{
+	margin-top:15px;
+	margin-right:30px;
+}
