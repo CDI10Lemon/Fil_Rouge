@@ -51,5 +51,4 @@ public class EmployeeService implements EmployeeServiceLocal {
 		entityManager.persist(employee);
 		return employee;
 	}
-
 }
