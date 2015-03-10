@@ -8,8 +8,15 @@ function creation()
 
 
   var dataformulaire = {
-           name : $("#inputLastName").val(),
-            lastname : $("#inputFirstName").val()
+           	name : $("#inputLastName").val(),
+            lastname : $("#inputFirstName").val(),
+            birthday : $("#inputBirthday").val(),
+            email : $("#inputEmail").val(),
+           
+            date : $("#inputInscriptionDate").val(),
+			
+            
+
         }
 
 alert(dataformulaire.name +" "+dataformulaire.lastname );
