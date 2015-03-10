@@ -26,52 +26,50 @@
             			<div id="logo">
             				<img src="images/cyberbaselogo_login.jpg" alt="Logo Cyberbase" width="400px;" height="145px;">
             			</div>
-            		
-            				<form class="form-signin" id="formLogin" name="formLogin">	  	
-	            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname">
+            				<div ng-controller="loginCtrl">
+	            				<form novalidate class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
+		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname">
 
-	            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name">
+		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name">
 
-	            				<div class="control-group">
-	            					<div class="controls">
-	            						<select id="siteRef" class="form-control">
-	            							<option value="0">Site de référence</option>
-	            							<option value="1">Site 1</option>
-	            							<option value="2">Site 2</option>
-	            							<option value="3">Site 3</option>
-	            							<option value="4">Site 4</option>
-	            							<option value="5">Site 5</option>
-	            							<option value="6">Site 6</option>
-	            							<option value="7">Site 7</option>
-	            							<option value="8">Site 8</option>
-	            						</select>
-	            					</div>
-	            				</div>
+		            				<div class="control-group">
+		            					<div class="controls">
+		            						<select id="siteRef" class="form-control">
+		            							<option value="0">Site de référence</option>
+		            							<option value="1" ng-model="employee.site">Site 1</option>
+		            							<option value="2" ng-model="employee.site">Site 2</option>
+		            							<option value="3" ng-model="employee.site">Site 3</option>
+		            							<option value="4" ng-model="employee.site">Site 4</option>
+		            							<option value="5" ng-model="employee.site">Site 5</option>
+		            							<option value="6" ng-model="employee.site">Site 6</option>
+		            							<option value="7" ng-model="employee.site">Site 7</option>
+		            							<option value="8" ng-model="employee.site">Site 8</option>
+		            						</select>
+		            					</div>
+		            				</div>
 
-	            				<div class="control-group">
-	            					<div class="controls">
-	            						<select id="structure" class="form-control">
-	            							<option value="0">Structure d'appartenance</option>
-	            							<option value="1">Pôle Emploi</option>
-	            							<option value="2">APEC</option>
-	            							<option value="3">Mission Locale</option>
-	            						</select>
-	            					</div>
-	            				</div>
-	            			<div class="form-group" ng-class="{'has-error' : formLogin.$dirty && formLogin.Password.$invalid,'has-success' : formLogin.Password.$valid}">
-	            				<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
-	            				<span class="text-danger" ng-show="registerForm.Password.$error.minlength">
-	   								 Doit contenir au minimum 4 caractères
-								</span>
+		            				<div class="control-group">
+		            					<div class="controls">
+		            						<select id="structure" class="form-control">
+		            							<option value="0">Structure d'appartenance</option>
+		            							<option value="1" ng-model="employee.structure">Pôle Emploi</option>
+		            							<option value="2" ng-model="employee.structure">APEC</option>
+		            							<option value="3" ng-model="employee.structure">Mission Locale</option>
+		            						</select>
+		            					</div>
+		            				</div>
+		            			<div class="form-group">
+		            				<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
+		            				
 
-	            				<span id="btnRaz" class="bouton">
-	            					<button class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button">RAZ</button>
-	            				</span>
-	            				<span id="btnConnect" class="bouton">
-	            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid">Se connecter</button>
-	            				</span>
-            				</form>
-            			
+		            				<span id="btnRaz" class="bouton">
+		            					<input class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button" value="RAZ"/>
+		            				</span>
+		            				<span id="btnConnect" class="bouton">
+		            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid" ng-click="connect(employee)">Se connecter</button>
+		            				</span>
+	            				</form>
+            				</div>
             		</section>
             	</div><!-- jumbotron -->
             	<footer class="footer">
