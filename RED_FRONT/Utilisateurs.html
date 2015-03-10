@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="cyberbase"> <!--<![endif]-->
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title></title>
+     <meta name="description" content="Page Usagers cyberbase">
+     <meta name="author" content="Groupe_Lemon">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/style.css">
+     <link rel="icon" href="images/lemon.ico">
+  <script type ="text/javascript" src="js/angular.min.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div class="container">
+           <header id="header" class="page-header">
+                 <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Postes</a>
+              <a class="navbar-brand" href="Usagers.html">Usagers</a>
+              <a class="navbar-brand" href="#">Statistiques</a>
+              <a class="navbar-brand" href="#">Salles</a>
+              <a class="navbar-brand" href="#">Utilisateurs</a>
+            </div>
+            <div id="titreHeader" class="nav navbar-nav">
+              <h3>CyberGest v1.0</h3>
+            </div>
+            <span id="btnDisconnect" class="nav navbar-nav navbar-right">
+              <button class="btn btn-sm btn-danger btn-block" type="submit">Déconnexion</button>
+            </span>
+            <div id="userHeader" class="nav navbar-nav navbar-right">
+              <div id="userHeader">
+                <span>user.avatar</span>
+                <span>user.firstname user.lastname</span>    
+              </div>    
+            </div>
+          </div>
+        </nav>
+      </header><!-- /header -->
+
+
+
+<div id="Utilisateur">
+<!-- Sélection usager -->
+<h2>Sélectionner un utlisateur</h2>
+ <input type="text" class="form-control" placeholder="Selectionner...">
+
+<textarea name="autoCompUtilisateur" rows="20" class="form-control"></textarea>  
+</div>
+
+<div id="form_nom_prenom">
+<!-- NOM -->
+            <label for "inputLastName">Nom</label>
+              <input type="text" class="form-control" name="inputLastName" id="inputLastName" placeholder="">
+<!-- PRENOM -->
+            <label for "inputFirstName">Prénom</label>
+              <input type="text" class="form-control" name="inputFirstName" id="inputFirstName" placeholder="">
+          </div>
+</br>
+    <label for="sec">Site De Reférence</label>
+<select name="sec" id="sec">
+<option value="site credo">site credo</option>
+<option value="site bellevue">site bellevue</option>
+<option value="site nantes">site nantes</option>
+</select>
+
+</br> 
+  <label for="structure">Structure d'appartenence</label>
+<select name="structure" id="structure">
+<option value="pole emploi">pole emploi</option>
+</select>
+
+</br>
+ 
+<input type="checkbox" name="utlimultisites" id="utlimultisites"/>
+Utilisateur multi sites :
+
+
+
+
+</br>
+<!-- Mot de passe -->
+    <label for "inputPassword">Mot de passe</label>
+    <input type="text" class="form-mdp" name="inputPassaword" id="inputPassaword" placeholder="">
+
+
+
+<!-- Confirmation -->
+    <label for "inputConfirmPassword">Confirmation du mot de passe</label>
+    <input type="text" class="form-mdp" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="">
+ <div id="btnsUtilisateur">
+            <input type="button" class="btn btn-lg btn-danger btn-block" value="supprimer" onclick="">
+            <input type="button" class="btn btn-lg btn-warning btn-block" value="modifier" onclick="">
+            <input type="button" class="btn btn-lg btn-success btn-block" value="créer" onclick="">
+          </div>
+
+
+
+
+
+    <footer class="footer">
+      <div class="container">
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+        </span>
+        <span class="footerLink"> | </span>
+        <span id="mentionLink">
+          <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+        </span>
+        <span class="divider"> | </span>
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+        </span>
+      </div>
+    </footer>
+</div> <!-- /container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Angular app -->
+<script src="js/cyberbase.js"></script>
+</body>
+</html>
