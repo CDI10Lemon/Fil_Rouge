@@ -45,82 +45,96 @@
           </div>
         </nav>
       </header><!-- /header -->
+<!-- ********************************************************** Contenu ************************************************************************ -->
 
-
-
-<div id="Utilisateur">
-<!-- Sélection usager -->
-<h2>Sélectionner un utlisateur</h2>
- <input type="text" class="form-control" placeholder="Selectionner...">
-
-<textarea name="autoCompUtilisateur" rows="20" class="form-control"></textarea>  
-</div>
-
-<div id="form_nom_prenom">
-<!-- NOM -->
-            <label for "inputLastName">Nom</label>
-              <input type="text" class="form-control" name="inputLastName" id="inputLastName" placeholder="">
-<!-- PRENOM -->
-            <label for "inputFirstName">Prénom</label>
-              <input type="text" class="form-control" name="inputFirstName" id="inputFirstName" placeholder="">
-          </div>
-</br>
-    <label for="sec">Site De Reférence</label>
-<select name="sec" id="sec">
-<option value="site credo">site credo</option>
-<option value="site bellevue">site bellevue</option>
-<option value="site nantes">site nantes</option>
-</select>
-
-</br> 
-  <label for="structure">Structure d'appartenence</label>
-<select name="structure" id="structure">
-<option value="pole emploi">pole emploi</option>
-</select>
-
-</br>
- 
-<input type="checkbox" name="utlimultisites" id="utlimultisites"/>
-Utilisateur multi sites :
-
-
-
-
-</br>
-<!-- Mot de passe -->
-    <label for "inputPassword">Mot de passe</label>
-    <input type="text" class="form-mdp" name="inputPassaword" id="inputPassaword" placeholder="">
-
-
-
-<!-- Confirmation -->
-    <label for "inputConfirmPassword">Confirmation du mot de passe</label>
-    <input type="text" class="form-mdp" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="">
- <div id="btnsUtilisateur">
-            <input type="button" class="btn btn-lg btn-danger btn-block" value="supprimer" onclick="">
-            <input type="button" class="btn btn-lg btn-warning btn-block" value="modifier" onclick="">
-            <input type="button" class="btn btn-lg btn-success btn-block" value="créer" onclick="">
-          </div>
-
-
-
-
-
-    <footer class="footer">
-      <div class="container">
-        <span class="footerLink">
-          <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
-        </span>
-        <span class="footerLink"> | </span>
-        <span id="mentionLink">
-          <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
-        </span>
-        <span class="divider"> | </span>
-        <span class="footerLink">
-          <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
-        </span>
+<div class="row">
+  <aside id="blocUsagerG" class="col-md-3">
+    <form id="form_blocUsagerG" class="form-signin" role="search">
+      <div class="form-group">
+        <!-- Sélection usager -->
+        <h2>Sélectionner un utlisateur</h2>
+        <input type="text" class="form-control" placeholder="Selectionner...">
+        <textarea name="autoCompUtilisateur" rows="20" class="form-control"></textarea>  
       </div>
-    </footer>
+    </form>
+  </aside>
+  <div class="col-md-1"></div>
+  <section id="blocPrincipal" class="col-md-8">
+    <form id="form_blocPrincipal" class="form-signin" role="search">
+      <div id="champNomPrenom" class="row ligneBlocPrincipal">
+        <div class="row">
+          <label for "inputLastName" class="col-md-6 champLabel">Nom</label>
+          <label for "inputFirstName" class="col-md-6 champLabel">Prénom</label>
+        </div>
+        <div class="row">
+          <input type="text" class="form-control col-md-6 champInputG" name="inputLastName" id="inputLastName" placeholder="">                      
+          <input type="text" class="form-control col-md-6 champInputD" name="inputFirstName" id="inputFirstName" placeholder="">
+        </div>
+      </div>
+      <div id="champSelection" class="row ligneBlocPrincipal">
+        <div class="row">
+          <label for="districts" class="col-md-6 champLabel">Site De Reférence</label>
+          <label for="structure" class="col-md-6 champLabel">Structure d'appartenence</label>
+        </div>
+        <div class="row">
+          <select name="districts" id="districts" class="form-control champInputG col-md-6">
+            <option value="centre">Centre-ville</option>
+            <option value="chantenay">Bellevue - Chantenay - Ste Anne</option>
+            <option value="zola">Dervallières - Zola</option>
+            <option value="felix">Hauts-Pavés - St Félix</option>
+            <option value="donatien">Malakoff - St Donatien</option>
+            <option value="ile">Île de Nantes</option>
+            <option value="breil">Breil - Barberie</option>
+            <option value="nord">Nantes Nord</option>
+            <option value="erdre">Nantes Erdre</option>
+            <option value="doulon">Doulon - Bottière</option>
+            <option value="sud">Nantes Sud</option>
+          </select> 
+          <select name="structure" id="structure" class="form-control champInputD col-md-6">
+            <option value="0">Structure d'appartenance</option>
+            <option value="1" ng-model="employee.structure">Pôle Emploi</option>
+            <option value="2" ng-model="employee.structure">APEC</option>
+            <option value="3" ng-model="employee.structure">Mission Locale</option>
+          </select>
+        </div>
+      </div>
+      <div id="checkUtilMulti" class="row ligneBlocPrincipal">
+        <input type="checkbox" name="utlimultisites" id="utlimultisites"/>
+          <h5>Utilisateur multi sites</h5>
+      </div>
+      <div id="champNomPrenom" class="row ligneBlocPrincipal">
+        <div class="row">
+          <label for "inputPassword" class="col-md-6 champLabel">Mot de passe</label>
+          <label for "inputConfirmPassword" class="col-md-6 champLabel">Confirmation du mot de passe</label>
+        </div>
+        <div class="row">
+          <input type="text" class="form-mdp col-md-6 champInputG" name="inputPassaword" id="inputPassaword" placeholder="">
+          <input type="text" class="form-mdp col-md-6 champInputD" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="">
+        </div>
+      </div> 
+      <div id="btnsUsager" class="row ligneBlocPrincipal">
+        <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4"> Annuler</button>
+        <button type="submit" class="btn btn-lg btn-warning glyphicon glyphicon-retweet col-md-4"> Modifier</button>
+        <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4"> Créer</button>
+      </div>
+    </form>
+  </section>
+</div>
+  <footer class="footer">
+    <div class="container">
+      <span class="footerLink">
+        <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+      </span>
+      <span class="footerLink"> | </span>
+      <span id="mentionLink">
+        <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+      </span>
+      <span class="divider"> | </span>
+      <span class="footerLink">
+        <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+      </span>
+    </div>
+  </footer>
 </div> <!-- /container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
