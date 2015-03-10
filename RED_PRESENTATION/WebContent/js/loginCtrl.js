@@ -5,7 +5,6 @@ angular.module('cyberbase',[])
 
 			$scope.reset=function(){
 				$scope.employee=angular.copy($scope.master);
-				$scope.employee.site="Site de référence";
 			};
 			$scope.reset();
 		}]);
