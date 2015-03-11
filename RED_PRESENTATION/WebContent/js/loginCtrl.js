@@ -1,10 +1,14 @@
-angular.module('cyberbase',[])
-	.controller('loginCtrl',['$scope',
-		function($scope){
-			$scope.master={};
+app.controller("loginCtrl",function($scope){
+	$scope.master={};
+	$scope.lastname="";
+	$scope.name="";
+	$scope.password="";
 
-			$scope.reset=function(){
-				$scope.employee=angular.copy($scope.master);
-			};
-			$scope.reset();
-		}]);
+	$scope.reset=function(){
+		$scope.employee=angular.copy($scope.master);
+	}
+});
+
+
+
+
