@@ -14,10 +14,6 @@
      <link rel="stylesheet" href="css/style.css">
      <link rel="icon" href="images/lemon.ico">
   <script type ="text/javascript" src="js/angular.min.js"></script>
-
-
-
-
 </head>
 <body>
   <!--[if lt IE 7]>
@@ -28,11 +24,11 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">Postes</a>
+              <a class="navbar-brand" href="Postes.html">Postes</a>
               <a class="navbar-brand" href="Usagers.html">Usagers</a>
-              <a class="navbar-brand" href="#">Statistiques</a>
-              <a class="navbar-brand" href="#">Salles</a>
-              <a class="navbar-brand" href="#">Utilisateurs</a>
+              <a class="navbar-brand" href="login.html">Statistiques</a>
+              <a class="navbar-brand" href="login.html">Salles</a>
+              <a class="navbar-brand" href="Utilisateurs.html">Utilisateurs</a>
             </div>
             <div id="titreHeader" class="nav navbar-nav">
               <h3>CyberGest v1.0</h3>
@@ -50,6 +46,7 @@
         </nav>
       </header><!-- /header -->
 
+<!-- ********************************************************** Contenu ************************************************************************ -->
       <div class="row">
             <aside id="blocUsagerG" class="col-md-3">
               <form id="form_blocUsagerG" class="form-signin" role="search">
@@ -103,7 +100,7 @@
                         <label for "inputInscriptionDate" class="col-md-6 champLabel">Date d'inscription</label>
                   </div>
                   <div class="row">
-                        <input type="text" class="form-control champInputG col-md-6" name="inputInscriptionSite" id="inputInscriptionSite" placeholder="">                  
+                        <input type="text" class="form-control champInputG col-md-6" name="inputInscriptionSite" id="inputInscriptionSite" placeholder="">           
                         <input type="date"name="inputInscriptionDate" class="form-control champInputD col-md-6">
                   </div>
                 </div>
@@ -172,14 +169,15 @@
                   </div>
                 </div>
                 <div id="btnsUsager" class="row ligneBlocPrincipal">
-                  <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4" onclick="effacer();"> supprimer</button>
-                  <button type="submit" class="btn btn-lg btn-warning glyphicon glyphicon-retweet col-md-4"> modifier</button>
-                   <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" onclick="creation();"> créer </button>
+
+                  <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4"> Supprimer</button>
+                  <button type="submit" class="btn btn-lg btn-warning glyphicon glyphicon-retweet col-md-4"> Modifier</button>
+                  <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" onclick="creation();"> Créer</button>
+
                 </div>
               </form>
             </section>
       </div>
-
     <footer class="footer">
       <div class="container">
         <span class="footerLink">
@@ -197,20 +195,12 @@
     </footer>
 </div> <!-- /container -->
 
-
-
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <!-- Angular app -->
 <script src="js/cyberbase.js"></script>
-
 <script src="js/creation.js"></script>
-
-
-
-
 </body>
 </html>
