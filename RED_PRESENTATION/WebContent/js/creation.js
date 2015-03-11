@@ -37,4 +37,8 @@ $.ajax({
 
 }
 
+function effacer()
+{
+	alert('delete');
+}
 

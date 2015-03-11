@@ -30,20 +30,22 @@
 	            				<form novalidate class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
 		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname">
 
+
 		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name">
 
 		            				<div class="control-group">
 		            					<div class="controls">
-		            						<select id="siteRef" class="form-control">
-		            							<option value="0">Site de référence</option>
-		            							<option value="1" ng-model="employee.site">Site 1</option>
-		            							<option value="2" ng-model="employee.site">Site 2</option>
-		            							<option value="3" ng-model="employee.site">Site 3</option>
-		            							<option value="4" ng-model="employee.site">Site 4</option>
-		            							<option value="5" ng-model="employee.site">Site 5</option>
-		            							<option value="6" ng-model="employee.site">Site 6</option>
-		            							<option value="7" ng-model="employee.site">Site 7</option>
-		            							<option value="8" ng-model="employee.site">Site 8</option>
+		            						<select id="siteRef" class="form-control" ng-model="employee.site">
+		            							<option ng-bind="getSites()" ng-repeat="site in sites">{{site.name}}</option>
+		            							<!-- <option value="0" >Site de référence</option>
+		            							<option value="1">Site 1</option>
+		            							<option value="2" >Site 2</option>
+		            							<option value="3" >Site 3</option>
+		            							<option value="4" >Site 4</option>
+		            							<option value="5" >Site 5</option>
+		            							<option value="6" >Site 6</option>
+		            							<option value="7" >Site 7</option>
+		            							<option value="8" >Site 8</option> -->
 		            						</select>
 		            					</div>
 		            				</div>

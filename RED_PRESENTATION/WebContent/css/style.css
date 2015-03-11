@@ -37,6 +37,9 @@ footer{
 #structure{
 	margin-bottom: 40px;
 }
+.selectTitre{
+	display:none;
+}
 /* placement boutons dans formulaire */
 .bouton{
 	display:inline-block;

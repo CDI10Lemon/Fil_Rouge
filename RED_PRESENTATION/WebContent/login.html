@@ -34,40 +34,41 @@
 
 		            				<div class="control-group">
 		            					<div class="controls">
-		            						<select id="siteRef" class="form-control">
-		            							<option value="0">Site de référence</option>
-		            							<option value="1" ng-model="employee.site">Site 1</option>
-		            							<option value="2" ng-model="employee.site">Site 2</option>
-		            							<option value="3" ng-model="employee.site">Site 3</option>
-		            							<option value="4" ng-model="employee.site">Site 4</option>
-		            							<option value="5" ng-model="employee.site">Site 5</option>
-		            							<option value="6" ng-model="employee.site">Site 6</option>
-		            							<option value="7" ng-model="employee.site">Site 7</option>
-		            							<option value="8" ng-model="employee.site">Site 8</option>
+		            						<select id="siteRef" class="form-control" ng-model="employee.site">	
+		            							<option value="" selected="selected" class="selectTitre">Site de référence</option>	        
+		            							<option value="1">Site 1</option>
+		            							<option value="2" >Site 2</option>
+		            							<option value="3" >Site 3</option>
+		            							<option value="4" >Site 4</option>
+		            							<option value="5" >Site 5</option>
+		            							<option value="6" >Site 6</option>
+		            							<option value="7" >Site 7</option>
+		            							<option value="8" >Site 8</option>
 		            						</select>
 		            					</div>
 		            				</div>
 
 		            				<div class="control-group">
 		            					<div class="controls">
-		            						<select id="structure" class="form-control">
-		            							<option value="0">Structure d'appartenance</option>
-		            							<option value="1" ng-model="employee.structure">Pôle Emploi</option>
-		            							<option value="2" ng-model="employee.structure">APEC</option>
-		            							<option value="3" ng-model="employee.structure">Mission Locale</option>
+		            						<select id="structure" class="form-control" ng-model="employee.structure">
+		            							<option value="" selected="selected" class="selectTitre">Structure d'appartenance</option>
+		            							<option value="1" >Pôle Emploi</option>
+		            							<option value="2" >APEC</option>
+		            							<option value="3" >Mission Locale</option>
 		            						</select>
 		            					</div>
 		            				</div>
-		            			<div class="form-group">
-		            				<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
+		            				<div class="form-group">
+		            					<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
 		            				
 
-		            				<span id="btnRaz" class="bouton">
+		            					<span id="btnRaz" class="bouton">
 		            					<input class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button" value="RAZ"/>
-		            				</span>
-		            				<span id="btnConnect" class="bouton">
-		            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid" ng-click="connect(employee)">Se connecter</button>
-		            				</span>
+		            					</span>
+		            					<span id="btnConnect" class="bouton">
+		            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid">Se connecter</button>
+		            					</span>
+		            				</div>
 	            				</form>
             				</div>
             		</section>

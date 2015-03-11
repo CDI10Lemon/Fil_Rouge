@@ -1,5 +1,6 @@
 package fr.imie.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -33,6 +34,20 @@ public class RoomWebService {
 		return Response.ok(findAll).build();
 	}
 	
+	@GET
+	@Path("/{id}")
+	public Response getAllRoomsByIdSite(@PathParam("id") Integer id ) {
+		List<Room> findAll = roomService.findAll();
+		List<Room> findByIdSite = new ArrayList<Room>();
+		
+		for (Room item : findAll) {
+		    if ((item.getSite().getIdSite()) == (id)){
+		    	findByIdSite.add(item);
+		    }
+		} 
+		return Response.ok(findByIdSite).build();
+	}
+		
 	@POST()
 	public Response insertRoom(Room room) {
 		roomService.create(room);
