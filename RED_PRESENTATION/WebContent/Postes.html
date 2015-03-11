@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="cyberbase"> <!--<![endif]-->
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title></title>
+     <meta name="description" content="Page Usagers cyberbase">
+     <meta name="author" content="Groupe_Lemon">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/style.css">
+     <link rel="icon" href="images/lemon.ico">
+  <script type ="text/javascript" src="js/angular.min.js"></script>
+  <script type ="text/javascript" src="js/poste.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div class="container">
+           <header id="header" class="page-header">
+                 <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="Postes.html">Postes</a>
+              <a class="navbar-brand" href="Usagers.html">Usagers</a>
+              <a class="navbar-brand" href="login.html">Statistiques</a>
+              <a class="navbar-brand" href="login.html">Salles</a>
+              <a class="navbar-brand" href="Utilisateurs.html">Utilisateurs</a>
+            </div>
+            <div id="titreHeader" class="nav navbar-nav">
+              <h3>CyberGest v1.0</h3>
+            </div>
+            <span id="btnDisconnect" class="nav navbar-nav navbar-right">
+              <button class="btn btn-sm btn-danger btn-block" type="submit">Déconnexion</button>
+            </span>
+            <div id="userHeader" class="nav navbar-nav navbar-right">
+              <div id="userHeader">
+                <span>user.avatar</span>
+                <span>user.firstname user.lastname</span>    
+              </div>    
+            </div>
+          </div>
+        </nav>
+      </header><!-- /header -->
+
+
+ <aside id="blocUsagerG" class="col-md-2">
+        <form id="form_blocUsagerG" class="form-signin" role="search">
+          <div class="form-group">
+           
+            <h2>Affecter un poste à un utilisateur</h2>
+            
+            <label for="studies">Selectionner un utilisateur</label>
+              <select name="studies" id="studies" class="form-control">
+               </select>
+
+              <label for="poste">Selectionner un poste</label>
+              <select name="poste" id="poste" class="form-control">
+               </select>
+
+              <label for="objet">Selectionner un objet de visite</label>
+              <select name="objet" id="objet" class="form-control">
+                  <option value="1" >Selectionner u objet de visite</option>
+                  <option value="2" ng-model="enduser.visit">Modifier CV</option>
+                  <option value="3" ng-model="enduser.visit">Rechercher offre</option>
+                  <option value="4" ng-model="enduser.visit">Prise rendez-vous</option>
+                  <option value="5" ng-model="enduser.visit">Repondre offre</option>
+              </select>
+               </br>
+               <p>
+                  <label>Durée d'utilisation du poste  </label>
+                  <input type="number" min="1" max="100" />
+                  </p>
+                </br>
+                <input type="button" class="btn btn-lg btn-success btn-block" value="valider" onclick="">
+    
+          </div>
+        </form>
+      </aside>
+
+      <section id="blocPrincipal" class="col-md-10">
+       <label for="site">Site de l'utilisateur (par défaut)</label>
+              <select name="site" id="site" class="form-control">
+               </select>
+               </br>
+               <div id="salle-credo">
+               <textarea name="salle credo" rows="15" cols="128"class="credo"> Salle credo 
+              
+               </textarea>
+               </div>
+
+                </br>
+                <div id="salle-apidum">
+                <textarea name="salle apidum" rows="10" cols="128" class="apidum"> Salle apidum</textarea> 
+                </div>
+               </br>
+        <div id="btnsUsagers">
+            <input type="button" class="btn btn-lg btn-danger btn-block" value="Libérer tous les postes" onclick="">
+          </div>
+      </section>
+
+
+
+    <footer class="footer">
+      <div class="container">
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+        </span>
+        <span class="footerLink"> | </span>
+        <span id="mentionLink">
+          <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+        </span>
+        <span class="divider"> | </span>
+        <span class="footerLink">
+          <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+        </span>
+      </div>
+    </footer>
+</div> <!-- /container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Angular app -->
+<script src="js/cyberbase.js"></script>
+</body>
+</html>
