@@ -40,8 +40,10 @@ public class EmployeeWebService {
 	}
 
 	@PUT()
-	public Response updateEmployee(Employee employee) {
-		employeeService.update(employee);
+	@Path("/{id}")
+	public Response updateEmployee(Employee employee, @PathParam("id") Integer id) {
+		employee.setIdEmployee(id);
+		employee = employeeService.update(employee);
 		return Response.ok(employee).build();
 	}
 
