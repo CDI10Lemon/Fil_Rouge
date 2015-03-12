@@ -27,10 +27,12 @@
             				<img src="images/cyberbaselogo_login.jpg" alt="Logo Cyberbase" width="400px;" height="145px;">
             			</div>
             				<div ng-controller="loginCtrl">
-	            				<form novalidate class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
-		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname">
+	            				<form novalidate ng-submit="formLogin()" class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
+		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname" ng-minlength="2" ng-maxlength="20">
+		            				<div ng-messages="formLogin.inputLastName.error" ng-messages-include="erreurs.html" ng-if="myForm.$submitted"></div>
 
-		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name">
+		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name" ng-minlength="2" ng-maxlength="20">
+		            				<div ng-messages="formLogin.inputFirstName.error" ng-messages-include="erreurs.html" ng-if="myForm.$submitted"></div>
 
 		            				<div class="control-group">
 		            					<div class="controls">
@@ -60,7 +62,7 @@
 		            				</div>
 		            				<div class="form-group">
 		            					<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
-		            				
+		            					<div ng-messages="formLogin.Password.error" ng-messages-include="erreurs.html" ></div>
 
 		            					<span id="btnRaz" class="bouton">
 		            					<input class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button" value="RAZ"/>
