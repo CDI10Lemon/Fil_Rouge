@@ -33,25 +33,35 @@ public class AffectationWebService {
 		return Response.ok(findAll).build();
 	}
 
-	@POST()
+	@GET
+	@Path("/{id}")
+	public Response getOneAffectation(@PathParam("id") Integer id){
+		Affectation affectation = new Affectation();
+		affectation.setIdAffectation(id);
+		Affectation retour = affectationService.findById(affectation);
+		return Response.ok(retour).build();
+
+	}
+	
+	@POST
 	public Response insertAffectation(Affectation affectation) {
 		affectationService.create(affectation);
 		return Response.ok(affectation).build();
 	}
 
-	@PUT()
-	public Response updateAffectation(Affectation affectation) {
-		affectationService.update(affectation);
+	@PUT
+	@Path("/{id}")
+	public Response updateAffectation(Affectation affectation, @PathParam("id") Integer id) {
+		affectation.setIdAffectation(id);
+		affectation = affectationService.update(affectation);
 		return Response.ok(affectation).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteAffectation(@PathParam("id") Integer id) {
-		Affectation affectation = new Affectation();
-		affectation.setIdAffectation(id);
-		affectation = affectationService.findById(affectation);
-		affectationService.delete(affectation);
-		return null;
+	public void deleteAffectation(@PathParam("id") Integer id) {
+		Affectation affectationToDelete = new Affectation();
+		affectationToDelete.setIdAffectation(id);
+		affectationService.delete(affectationToDelete);
 	}
 }

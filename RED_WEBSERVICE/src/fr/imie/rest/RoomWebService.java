@@ -36,6 +36,16 @@ public class RoomWebService {
 	
 	@GET
 	@Path("/{id}")
+	public Response getOneRoom(@PathParam("id") Integer id){
+		Room room = new Room();
+		room.setIdRoom(id);
+		Room retour = roomService.findById(room);
+		return Response.ok(retour).build();
+
+	}
+	
+	@GET
+	@Path("/idsite/{id}")
 	public Response getAllRoomsByIdSite(@PathParam("id") Integer id ) {
 		List<Room> findAll = roomService.findAll();
 		List<Room> findByIdSite = new ArrayList<Room>();
@@ -54,19 +64,19 @@ public class RoomWebService {
 		return Response.ok(room).build();
 	}
 	
-	@PUT()
-	public Response updateRoom(Room room) {
-		roomService.update(room);
+	@PUT
+	@Path("/{id}")
+	public Response updateRoom(Room room, @PathParam("id") Integer id) {
+		room.setIdRoom(id);
+		room = roomService.update(room);
 		return Response.ok(room).build();
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	public Response deleteRoom(@PathParam("id") Integer id ){
-		Room room = new Room();
-		room.setIdRoom(id);
-		room = roomService.findById(room);
-		roomService.delete(room);
-		return null;
+	public void deleteRoom(@PathParam("id") Integer id) {
+		Room roomToDelete = new Room();
+		roomToDelete.setIdRoom(id);
+		roomService.delete(roomToDelete);
 	}
 }

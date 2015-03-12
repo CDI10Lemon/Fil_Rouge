@@ -33,25 +33,34 @@ public class PscWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getOnePsc(@PathParam("id") Integer id){
+		Psc psc = new Psc();
+		psc.setIdPsc(id);
+		Psc retour = pscService.findById(psc);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertPsc(Psc psc) {
 		pscService.create(psc);
 		return Response.ok(psc).build();
 	}
 
-	@PUT()
-	public Response updatePsc(Psc psc) {
-		pscService.update(psc);
+	@PUT
+	@Path("/{id}")
+	public Response updatePsc(Psc psc, @PathParam("id") Integer id) {
+		psc.setIdPsc(id);
+		psc = pscService.update(psc);
 		return Response.ok(psc).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deletePsc(@PathParam("id") Integer id) {
-		Psc psc = new Psc();
-		psc.setIdPsc(id);
-		psc = pscService.findById(psc);
-		pscService.delete(psc);
-		return null;
+	public void deletePsc(@PathParam("id") Integer id) {
+		Psc pscToDelete = new Psc();
+		pscToDelete.setIdPsc(id);
+		pscService.delete(pscToDelete);
 	}
 }

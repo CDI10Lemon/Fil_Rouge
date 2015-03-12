@@ -36,6 +36,16 @@ public class UnitWebService {
 	
 	@GET
 	@Path("/{id}")
+	public Response getOneUnit(@PathParam("id") Integer id){
+		Unit unit = new Unit();
+		unit.setIdUnit(id);
+		Unit retour = unitService.findById(unit);
+		return Response.ok(retour).build();
+
+	}
+	
+	@GET
+	@Path("/idroom/{id}")
 	public Response getAllUnitsByIdSite(@PathParam("id") Integer id ) {
 		List<Unit> findAll = unitService.findAll();
 		List<Unit> findByIdRoom = new ArrayList<Unit>();
@@ -54,19 +64,19 @@ public class UnitWebService {
 		return Response.ok(unit).build();
 	}
 
-	@PUT()
-	public Response updateUnit(Unit unit) {
-		unitService.update(unit);
+	@PUT
+	@Path("/{id}")
+	public Response updateUnit(Unit unit, @PathParam("id") Integer id) {
+		unit.setIdUnit(id);
+		unit = unitService.update(unit);
 		return Response.ok(unit).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUnit(@PathParam("id") Integer id) {
-		Unit unit = new Unit();
-		unit.setIdUnit(id);
-		unit = unitService.findById(unit);
-		unitService.delete(unit);
-		return null;
+	public void deleteUnit(@PathParam("id") Integer id) {
+		Unit unitToDelete = new Unit();
+		unitToDelete.setIdUnit(id);
+		unitService.delete(unitToDelete);
 	}
 }

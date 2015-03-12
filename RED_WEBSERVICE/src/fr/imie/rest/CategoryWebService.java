@@ -32,26 +32,35 @@ public class CategoryWebService {
 		List<Category> findAll = categoryService.findAll();
 		return Response.ok(findAll).build();
 	}
-
-	@POST()
+	
+	@GET
+	@Path("/{id}")
+	public Response getOneCategory(@PathParam("id") Integer id){
+		Category category = new Category();
+		category.setIdCategory(id);
+		Category retour = categoryService.findById(category);
+		return Response.ok(retour).build();
+	}
+	
+	@POST
 	public Response insertCategory(Category category) {
 		categoryService.create(category);
 		return Response.ok(category).build();
 	}
 
-	@PUT()
-	public Response updateCategory(Category category) {
-		categoryService.update(category);
+	@PUT
+	@Path("/{id}")
+	public Response updateCategory(Category category, @PathParam("id") Integer id) {
+		category.setIdCategory(id);
+		category = categoryService.update(category);
 		return Response.ok(category).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteCategory(@PathParam("id") Integer id) {
-		Category category = new Category();
-		category.setIdCategory(id);
-		category = categoryService.findById(category);
-		categoryService.delete(category);
-		return null;
+	public void deleteCategory(@PathParam("id") Integer id) {
+		Category categoryToDelete = new Category();
+		categoryToDelete.setIdCategory(id);
+		categoryService.delete(categoryToDelete);
 	}
 }
