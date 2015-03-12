@@ -28,30 +28,39 @@ public class AvailabilityWebService {
 	AvailabilityServiceLocal availabilityService;
 
 	@GET
-	public Response getAllStates() {
+	public Response getAllAvailabilities() {
 		List<Availability> findAll = availabilityService.findAll();
 		return Response.ok(findAll).build();
 	}
-
-	@POST()
-	public Response insertState(Availability availability) {
+	
+	@GET
+	@Path("/{id}")
+	public Response getOneAvailability(@PathParam("id") Integer id){
+		Availability availability = new Availability();
+		availability.setIdAvailability(id);
+		Availability retour = availabilityService.findById(availability);
+		return Response.ok(retour).build();
+	}
+	
+	@POST
+	public Response insertAvailability(Availability availability) {
 		availabilityService.create(availability);
 		return Response.ok(availability).build();
 	}
 
-	@PUT()
-	public Response updateUnit(Availability availability) {
-		availabilityService.update(availability);
+	@PUT
+	@Path("/{id}")
+	public Response updateAvailability(Availability availability, @PathParam("id") Integer id) {
+		availability.setIdAvailability(id);
+		availability = availabilityService.update(availability);
 		return Response.ok(availability).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteAvailability(@PathParam("id") Integer id) {
-		Availability availability = new Availability();
-		availability.setIdAvailability(id);
-		availability = availabilityService.findById(availability);
-		availabilityService.delete(availability);
-		return null;
+	public void deleteAvailability(@PathParam("id") Integer id) {
+		Availability availabilityToDelete = new Availability();
+		availabilityToDelete.setIdAvailability(id);
+		availabilityService.delete(availabilityToDelete);
 	}
 }

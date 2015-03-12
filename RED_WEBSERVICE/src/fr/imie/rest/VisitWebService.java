@@ -33,25 +33,34 @@ public class VisitWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getOneVisit(@PathParam("id") Integer id){
+		Visit visit = new Visit();
+		visit.setIdVisit(id);
+		Visit retour = visitService.findById(visit);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertVisit(Visit visit) {
 		visitService.create(visit);
 		return Response.ok(visit).build();
 	}
 
-	@PUT()
-	public Response updateVisit(Visit visit) {
-		visitService.update(visit);
+	@PUT
+	@Path("/{id}")
+	public Response updateVisit(Visit visit, @PathParam("id") Integer id) {
+		visit.setIdVisit(id);
+		visit = visitService.update(visit);
 		return Response.ok(visit).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteEmployee(@PathParam("id") Integer id) {
-		Visit visit = new Visit();
-		visit.setIdVisit(id);
-		visit = visitService.findById(visit);
-		visitService.delete(visit);
-		return null;
+	public void deleteVisit(@PathParam("id") Integer id) {
+		Visit visitToDelete = new Visit();
+		visitToDelete.setIdVisit(id);
+		visitService.delete(visitToDelete);
 	}
 }

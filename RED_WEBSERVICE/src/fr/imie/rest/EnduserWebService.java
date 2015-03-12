@@ -32,26 +32,35 @@ public class EnduserWebService {
 		List<Enduser> findAll = enduserService.findAll();
 		return Response.ok(findAll).build();
 	}
-
+	
+	@GET
+	@Path("/{id}")
+	public Response getOneEnduser(@PathParam("id") Integer id){
+		Enduser enduser = new Enduser();
+		enduser.setIdEnduser(id);
+		Enduser retour = enduserService.findById(enduser);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertEnduser(Enduser enduser) {
 		enduserService.create(enduser);
 		return Response.ok(enduser).build();
 	}
 
-	@PUT()
-	public Response updateEnduser(Enduser enduser) {
-		enduserService.update(enduser);
+	@PUT
+	@Path("/{id}")
+	public Response updateEnduser(Enduser enduser, @PathParam("id") Integer id) {
+		enduser.setIdEnduser(id);
+		enduser = enduserService.update(enduser);
 		return Response.ok(enduser).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteEnduser(@PathParam("id") Integer id) {
-		Enduser enduser = new Enduser();
-		enduser.setIdEnduser(id);
-		enduser = enduserService.findById(enduser);
-		enduserService.delete(enduser);
-		return null;
+	public void deleteEnduser(@PathParam("id") Integer id) {
+		Enduser enduserToDelete = new Enduser();
+		enduserToDelete.setIdEnduser(id);
+		enduserService.delete(enduserToDelete);
 	}
 }

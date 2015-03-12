@@ -33,25 +33,34 @@ public class DistrictWebService {
 		return Response.ok(findAll).build();
 	}
 
-	@POST()
+	@GET
+	@Path("/{id}")
+	public Response getOneDistrict(@PathParam("id") Integer id){
+		District district = new District();
+		district.setIdDistrict(id);
+		District retour = districtService.findById(district);
+		return Response.ok(retour).build();
+	}
+	
+	@POST
 	public Response insertDistrict(District district) {
 		districtService.create(district);
 		return Response.ok(district).build();
 	}
 
-	@PUT()
-	public Response updateEmployee(District district) {
-		districtService.update(district);
+	@PUT
+	@Path("/{id}")
+	public Response updateDistrict(District district, @PathParam("id") Integer id) {
+		district.setIdDistrict(id);
+		district = districtService.update(district);
 		return Response.ok(district).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteDistrict(@PathParam("id") Integer id) {
-		District district = new District();
-		district.setIdDistrict(id);
-		district = districtService.findById(district);
-		districtService.delete(district);
-		return null;
+	public void deleteDistrict(@PathParam("id") Integer id) {
+		District districtToDelete = new District();
+		districtToDelete.setIdDistrict(id);
+		districtService.delete(districtToDelete);
 	}
 }

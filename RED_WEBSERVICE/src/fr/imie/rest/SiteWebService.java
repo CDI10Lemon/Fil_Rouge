@@ -33,25 +33,34 @@ public class SiteWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getSite(@PathParam("id") Integer id){
+		Site site = new Site();
+		site.setIdSite(id);
+		Site retour = siteService.findById(site);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertSite(Site site) {
 		siteService.create(site);
 		return Response.ok(site).build();
 	}
 
-	@PUT()
-	public Response updateSite(Site site) {
-		siteService.update(site);
+	@PUT
+	@Path("/{id}")
+	public Response updateSite(Site site, @PathParam("id") Integer id) {
+		site.setIdSite(id);
+		site = siteService.update(site);
 		return Response.ok(site).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteSite(@PathParam("id") Integer id) {
-		Site site = new Site();
-		site.setIdSite(id);
-		site = siteService.findById(site);
-		siteService.delete(site);
-		return null;
+	public void deleteSite(@PathParam("id") Integer id) {
+		Site siteToDelete = new Site();
+		siteToDelete.setIdSite(id);
+		siteService.delete(siteToDelete);
 	}
 }
