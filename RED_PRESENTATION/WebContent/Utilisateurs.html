@@ -54,7 +54,7 @@
         <!-- Sélection usager -->
         <h2>Sélectionner un utilisateur</h2>
         
-        <input id="selectEmployee" type="search" class="form-control" placeholder="Sélectionner...">
+        <input id="selectEmployee" type="text" class="form-control">
         <div id="autoCompletion" style="height: 300px; overflow: auto">
         </div>
         <!-- 
@@ -123,9 +123,12 @@
         </div>
       </div> 
       <div id="btnsUsager" class="row ligneBlocPrincipal">
-        <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4" disabled="disabled"> Annuler</button>
-        <button type="submit" class="btn btn-lg  btn-warning glyphicon glyphicon-retweet col-md-4" disabled="disabled"> Modifier</button>
+        <button id="btnCancel" type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4" disabled="disabled"> Annuler</button>
+        <button id="btnModify" type="submit" class="btn btn-lg  btn-warning glyphicon glyphicon-retweet col-md-4" disabled="disabled"> Modifier</button>
+        <button id="btnCreate" type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" > Créer</button>
+        <!-- 
         <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" onclick="creationuser();"> Créer</button>
+      	-->
       </div>
     </form>
   </section>
