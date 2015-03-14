@@ -32,14 +32,23 @@ public class EmployeeWebService {
 		List<Employee> findAll = employeeService.findAll();
 		return Response.ok(findAll).build();
 	}
+	
+	@GET
+	@Path("/{id}")
+	public Response getOneEmployee(@PathParam("id") Integer id){
+		Employee employee = new Employee();
+		employee.setIdEmployee(id);
+		Employee retour = employeeService.findById(employee);
+		return Response.ok(retour).build();
 
-	@POST()
+	}
+
+	@POST
 	public Response insertEmployee(Employee employee) {
-		employeeService.create(employee);
+		employee = employeeService.create(employee);
 		return Response.ok(employee).build();
 	}
 
-	@PUT()
 	@Path("/{id}")
 	public Response updateEmployee(Employee employee, @PathParam("id") Integer id) {
 		employee.setIdEmployee(id);
@@ -49,11 +58,9 @@ public class EmployeeWebService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteEmployee(@PathParam("id") Integer id) {
-		Employee employee = new Employee();
-		employee.setIdEmployee(id);
-		employee = employeeService.findById(employee);
-		employeeService.delete(employee);
-		return null;
+	public void deleteEmployee(@PathParam("id") Integer id) {
+		Employee employeeToDelete = new Employee();
+		employeeToDelete.setIdEmployee(id);
+		employeeService.delete(employeeToDelete);
 	}
 }

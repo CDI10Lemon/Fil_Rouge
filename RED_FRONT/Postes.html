@@ -21,54 +21,53 @@
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <div class="container">
-           <header id="header" class="page-header">
-                 <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="Postes.html">Postes</a>
-              <a class="navbar-brand" href="Usagers.html">Usagers</a>
-              <a class="navbar-brand" href="login.html">Statistiques</a>
-              <a class="navbar-brand" href="login.html">Salles</a>
-              <a class="navbar-brand" href="Utilisateurs.html">Utilisateurs</a>
-            </div>
-            <div id="titreHeader" class="nav navbar-nav">
-              <h3>CyberGest v1.0</h3>
-            </div>
-            <span id="btnDisconnect" class="nav navbar-nav navbar-right">
-              <button class="btn btn-sm btn-danger btn-block" type="submit">Déconnexion</button>
-            </span>
-            <div id="userHeader" class="nav navbar-nav navbar-right">
-              <div id="userHeader">
-                <span>user.avatar</span>
-                <span>user.firstname user.lastname</span>    
-              </div>    
-            </div>
+    <header id="header" class="page-header">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="Postes.html">Postes</a>
+            <a class="navbar-brand" href="Usagers.html">Usagers</a>
+            <a class="navbar-brand" href="login.html">Statistiques</a>
+            <a class="navbar-brand" href="login.html">Salles</a>
+            <a class="navbar-brand" href="Utilisateurs.html">Utilisateurs</a>
           </div>
-        </nav>
-      </header><!-- /header -->
-
-
- <aside id="blocUsagerG" class="col-md-2">
+          <div id="titreHeader" class="nav navbar-nav">
+            <h3>CyberGest v1.0</h3>
+          </div>
+          <span id="btnDisconnect" class="nav navbar-nav navbar-right">
+            <button class="btn btn-sm btn-danger btn-block" type="submit">Déconnexion</button>
+          </span>
+          <div id="userHeader" class="nav navbar-nav navbar-right">
+            <div id="userHeader">
+              <span>user.avatar</span>
+              <span>user.firstname user.lastname</span>    
+            </div>    
+          </div>
+        </div>
+      </nav>
+    </header><!-- /header -->
+<!-- ********************************************************** Contenu ************************************************************************ -->
+    <div class="row">
+      <aside id="blocUsagerG" class="col-md-3">
         <form id="form_blocUsagerG" class="form-signin" role="search">
           <div class="form-group">
-           
             <h2>Affecter un poste à un utilisateur</h2>
-            
             <label for="studies">Selectionner un utilisateur</label>
-              <select name="studies" id="studies" class="form-control">
-               </select>
+            <select name="studies" id="studies" class="form-control">
+              
+            </select>
 
               <label for="poste">Selectionner un poste</label>
               <select name="poste" id="poste" class="form-control">
                </select>
 
               <label for="objet">Selectionner un objet de visite</label>
-              <select name="objet" id="objet" class="form-control">
-                  <option value="1" >Selectionner u objet de visite</option>
-                  <option value="2" ng-model="enduser.visit">Modifier CV</option>
-                  <option value="3" ng-model="enduser.visit">Rechercher offre</option>
-                  <option value="4" ng-model="enduser.visit">Prise rendez-vous</option>
-                  <option value="5" ng-model="enduser.visit">Repondre offre</option>
+              <select name="objet" id="objet" class="form-control" ng-model="enduser.visit">
+                  <option value="" selected="selected" class="selectTitre">Selectionner un objet de visite</option>
+                  <option value="1" >Modifier CV</option>
+                  <option value="2" >Rechercher offre</option>
+                  <option value="3" >Prise rendez-vous</option>
+                  <option value="4" >Repondre offre</option>
               </select>
                </br>
                <p>
@@ -81,8 +80,8 @@
           </div>
         </form>
       </aside>
-
-      <section id="blocPrincipal" class="col-md-10">
+      <div class="col-md-1"></div>
+      <section id="blocPrincipal" class="col-md-8">
        <label for="site">Site de l'utilisateur (par défaut)</label>
               <select name="site" id="site" class="form-control">
                </select>
@@ -102,7 +101,7 @@
             <input type="button" class="btn btn-lg btn-danger btn-block" value="Libérer tous les postes" onclick="">
           </div>
       </section>
-
+    </div>
 
 
     <footer class="footer">

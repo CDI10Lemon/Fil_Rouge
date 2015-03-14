@@ -33,25 +33,34 @@ public class TrainingWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getOneTraining(@PathParam("id") Integer id){
+		Training training = new Training();
+		training.setIdTraining(id);
+		Training retour = trainingService.findById(training);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertTraining(Training training) {
 		trainingService.create(training);
 		return Response.ok(training).build();
 	}
 
-	@PUT()
-	public Response updateTraining(Training training) {
-		trainingService.update(training);
+	@PUT
+	@Path("/{id}")
+	public Response updateTraining(Training training, @PathParam("id") Integer id) {
+		training.setIdTraining(id);
+		training = trainingService.update(training);
 		return Response.ok(training).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteTraining(@PathParam("id") Integer id) {
-		Training training = new Training();
-		training.setIdTraining(id);
-		training = trainingService.findById(training);
-		trainingService.delete(training);
-		return null;
+	public void deleteTraining(@PathParam("id") Integer id) {
+		Training trainingToDelete = new Training();
+		trainingToDelete.setIdTraining(id);
+		trainingService.delete(trainingToDelete);
 	}
 }

@@ -33,25 +33,34 @@ public class ExcludeWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getOneExclude(@PathParam("id") Integer id){
+		Exclude exclude = new Exclude();
+		exclude.setIdExclude(id);
+		Exclude retour = excludeService.findById(exclude);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertExclude(Exclude exclude) {
 		excludeService.create(exclude);
 		return Response.ok(exclude).build();
 	}
 
-	@PUT()
-	public Response updateExclude(Exclude exclude) {
-		excludeService.update(exclude);
+	@PUT
+	@Path("/{id}")
+	public Response updateExclude(Exclude exclude, @PathParam("id") Integer id) {
+		exclude.setIdExclude(id);
+		exclude = excludeService.update(exclude);
 		return Response.ok(exclude).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteExclude(@PathParam("id") Integer id) {
-		Exclude exclude = new Exclude();
-		exclude.setIdExclude(id);
-		exclude = excludeService.findById(exclude);
-		excludeService.delete(exclude);
-		return null;
+	public void deleteExclude(@PathParam("id") Integer id) {
+		Exclude excludeToDelete = new Exclude();
+		excludeToDelete.setIdExclude(id);
+		excludeService.delete(excludeToDelete);
 	}
 }

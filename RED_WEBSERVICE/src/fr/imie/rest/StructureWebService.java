@@ -33,25 +33,34 @@ public class StructureWebService {
 		return Response.ok(findAll).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getOneStructure(@PathParam("id") Integer id){
+		Structure structure = new Structure();
+		structure.setIdStructure(id);
+		Structure retour = structureService.findById(structure);
+		return Response.ok(retour).build();
+	}
+	
 	@POST()
 	public Response insertStructure(Structure structure) {
 		structureService.create(structure);
 		return Response.ok(structure).build();
 	}
 
-	@PUT()
-	public Response updateEmployee(Structure structure) {
-		structureService.update(structure);
+	@PUT
+	@Path("/{id}")
+	public Response updateStructure(Structure structure, @PathParam("id") Integer id) {
+		structure.setIdStructure(id);
+		structure = structureService.update(structure);
 		return Response.ok(structure).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteStructure(@PathParam("id") Integer id) {
-		Structure structure = new Structure();
-		structure.setIdStructure(id);
-		structure = structureService.findById(structure);
-		structureService.delete(structure);
-		return null;
+	public void deleteStructure(@PathParam("id") Integer id) {
+		Structure structureToDelete = new Structure();
+		structureToDelete.setIdStructure(id);
+		structureService.delete(structureToDelete);
 	}
 }
