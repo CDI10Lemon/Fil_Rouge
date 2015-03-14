@@ -4,7 +4,13 @@
  * Implementation des fonctionnalités de la page Utilisateurs
  * 
  * @author Sebastien PASSIER
- * @version 1.0
+ * @version 1.0.1
+ * 
+ * @Todo 
+ * - Contrôles des champs via regexp
+ * - Messages d'erreurs pour les controles de champs
+ * - Messages d'erreurs pour les accès au service REST
+ * - Gestion de l'affichage des boutons
  */
 
 (function(){
@@ -12,6 +18,34 @@
 	
 	var employeeList = [];
 
+	/**
+	 * Employee
+	 * 
+	 * Prototype employee, DTO des utilisateurs
+	 * 
+	 * @param id id technique de l'utilisateur
+	 * @param name Nom de l'utilisateur
+	 * @param lastname Prénom de l'utilisateur
+	 */
+	var Employee = function(id, name, lastname, password, category, structure, site) {
+		this.id = id || 0;
+		this.name = name || "";
+		this.lastname = lastname || "";
+		this.password = password || "";
+		this.category = category || "";
+		this.structure = structure || "";
+		this.site = site || "";
+		
+		/**
+		 * fullname
+		 * 
+		 * @return string Renvoie la construction du NOM + Prenom
+		 */
+		this.fullname = function () {
+			return this.lastname + " " + this.name;
+		};
+	};
+	
 	/**
 	 * initilization
 	 * 
@@ -40,7 +74,7 @@
 		
 		for ( var index = startIndex; index < employeeList.length; index++ ) {
 			$row = $("<tr/>");
-			$row.html("<td>" + employeeList[index] + "</td>");
+			$row.html("<td data-row=" + index + ">" + employeeList[index].fullname() + "</td>");
 			$table.append($row);
 		}
 		
@@ -59,10 +93,23 @@
 			dataType: "json",
 			contentType: "application/json",
 			success: function(data) {
+				
+				console.log(data);
 				for ( var index = 0; index < data.length; index++ ) {
-					employeeList.push(data[index].lastname + " " + data[index].name);
+					var employee = new Employee(data[index].idEmployee, data[index].name, data[index].lastname, data[index].password, data[index].category, data[index].structure, data[index].site);
+					
+					employeeList.push(employee);
 				}
-				employeeList.sort();
+				employeeList.sort(function(itemA, itemB) {
+					  var a = itemA.lastname.toLowerCase();
+					  var b = itemB.lastname.toLowerCase();
+
+					  if( a < b )
+					    return -1;
+					  else if( a > b )
+					    return 1;
+					 return 0;
+					});
         	
 				refreshQuickSelectionView(0);
 			}
@@ -88,7 +135,7 @@
 					$("#structures").append($option);
 				}
 				
-				// Option vide en tete de sélection
+				// Head of the selection is empty (at option tag of index zero)
 				$option = $("<option value=" + 0 + "></option>");
 				$("#structures").prepend($option);
 			}
@@ -114,7 +161,7 @@
 					$("#sites").append($option);
 				}
 				
-				// Option vide en tete de sélection
+				// Head of the selection is empty (at option tag of index zero)
 				$option = $("<option value=" + 0 + "></option>");
 				$("#sites").prepend($option);
 			}
@@ -127,7 +174,7 @@
 	$("#selectEmployee").keyup(function() {
 		var searchStr = $(this).val().toLowerCase();
 		for ( var index = 0; index < employeeList.length; index++ ) {
-		    var subStr = employeeList[index].toLowerCase().substring(0, searchStr.length);
+		    var subStr = employeeList[index].fullname().toLowerCase().substring(0, searchStr.length);
 		    	
 		    if ( subStr === searchStr )
 		    {
@@ -137,6 +184,26 @@
 		}
 	});
 
+	// Delegated events have the advantage that they can process events from children elements that are added to the document at a later time
+	$("#autoCompletion").on("click", "#employeeTable td", function(e) {
+		var selectedRowIndex = $(this).attr("data-row");
+		
+		// When selected, the fullname much appears in the search input
+		$("#selectEmployee").val(employeeList[selectedRowIndex].fullname());
+		
+		// Now populate all fields
+		$("#inputLastName").val(employeeList[selectedRowIndex].lastname);
+		$("#inputFirstName").val(employeeList[selectedRowIndex].name);		
+		// FIXME: les données doivent être contenues dans un DTO site
+		$("#sites").val(employeeList[selectedRowIndex].site);
+		// FIXME: les données doivent être contenues dans un DTO structure
+		$("#structures").val(employeeList[selectedRowIndex].structure);
+		$("#inputPassword").val(employeeList[selectedRowIndex].password);
+		$("#inputConfirmPassword").val(employeeList[selectedRowIndex].password);
+		// FIXME: les données doivent être contenues dans un DTO category
+		$("#utlimultisites").prop("checked", true);
+	});
+	
 	/*
 	 * Flow of execution of the page
 	 */
