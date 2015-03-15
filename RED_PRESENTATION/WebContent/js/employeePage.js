@@ -11,6 +11,7 @@
  * - Messages d'erreurs pour les controles de champs
  * - Messages d'erreurs pour les accès au service REST
  * - Créer/update un utilisateur
+ * - Popup
  */
 
 (function(){
@@ -300,7 +301,21 @@
 	});
 	
 	$("#btnDelete").click(function() {
-		queryDeleteEmployee(employeeSelected);
+		$("#popup").modal("show");
+
+		// TODO : queryDeleteEmployee est call par le bouton enregistrer de la popup
+		//queryDeleteEmployee(employeeSelected);
+		/*
+		clearAllFields(true);
+		disableButtons(false, true);
+		*/
+	});
+	
+	$(".modal").on("shown.bs.modal", function(){
+		// TODO: ici modifier le DOM de la popup
+	});
+	
+	$(".modal").on("hidden.bs.modal", function(){
 		clearAllFields(true);
 		disableButtons(false, true);
 	});
