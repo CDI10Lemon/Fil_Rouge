@@ -229,8 +229,9 @@
 			}).done(function(data) {
 				console.log("[DEBUG] employee " + employee.lastname + " deleted successfully");
 				
-				queryAllEmployees();
+				employeeList.splice(employeeList.indexOf(employee), 1);
 				employeeSelected = null;
+				refreshQuickSelectionView(0); // We are async...
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -300,7 +301,6 @@
 	
 	$("#btnDelete").click(function() {
 		queryDeleteEmployee(employeeSelected);
-		refreshQuickSelectionView(0);
 		clearAllFields(true);
 		disableButtons(false, true);
 	});
