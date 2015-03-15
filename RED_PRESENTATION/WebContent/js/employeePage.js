@@ -4,34 +4,39 @@
  * Implementation des fonctionnalités de la page Utilisateurs
  * 
  * @author Sebastien PASSIER
- * @version 1.0.1
+ * @version 1.0.2
  * 
  * @Todo 
  * - Contrôles des champs via regexp
  * - Messages d'erreurs pour les controles de champs
  * - Messages d'erreurs pour les accès au service REST
- * - Gestion de l'affichage des boutons
- * - Créer un utilisateur
- * - Modifier un utilisateur
- * - Annuler
+ * - Créer/update un utilisateur
  */
 
 (function(){
 	"use strict";
 	
 	var employeeList = [];
-
+	var employeeSelected = null;
+	
 	/**
 	 * initilization
 	 * 
 	 * Cette méthode regroupe l'ensemble des opérations réalisées sitôt le chargement de la page terminé
 	 */
 	function initialization() {
-		clearAllFields();
-		disableButtons(false, true, true);
+		clearAllFields(true);
+		disableButtons(false, true);
 		queryAllEmployees();
 		queryAllSites();
 		queryAllStructures();
+		
+		// Disable KEY_ENTER on input #selectedEmployee to prevent deletion
+    	$("#selectEmployee").on('keypress keydown keyup', function (e) {
+    		if (e.keyCode == 13) {
+    			e.preventDefault();
+	    	}
+    	});
 	}
 	
 	/**
@@ -61,27 +66,55 @@
 	/**
 	 * clearAllFields
 	 * 
-	 * Efface tous les champs, desélectionne les comboBox et decoche la checkbox
+	 * Efface tous les champs, desélectionne les comboBox et décoche la checkbox
+	 * 
+	 * @param withSearchInput Boolean indiquant si le champs de recherche doit aussi être effacer
 	 */
-	function clearAllFields() {
-		$("input").val("");
+	function clearAllFields(withSearchInput) {
+		if ( !withSearchInput ) {
+			$("#inputLastName").val("");
+			$("#inputFirstName").val("");
+			$("#inputPassword").val("");
+			$("#inputConfirmPassword").val("");
+		}
+		else {
+			$("input").val("");
+		}
 		$("select").val("");
 		$(":checkbox").prop("checked", false);
 	}
 	
 	/**
+	 * populateFieldsFromEmployee
+	 * 
+	 * Alimente les différents champs de la page avec les données du DTO employee
+	 * 
+	 * @param employee Objet de type Employee
+	 */
+	function populateFieldsFromEmployee(employee) {
+		$("#inputLastName").val(employee.lastname);
+		$("#inputFirstName").val(employee.name);		
+		// FIXME: les données doivent être contenues dans un DTO site
+		$("#sites").val(employee.site);
+		// FIXME: les données doivent être contenues dans un DTO structure
+		$("#structures").val(employee.structure);
+		$("#inputPassword").val(employee.password);
+		$("#inputConfirmPassword").val(employeeList.password);
+		// FIXME: les données doivent être contenues dans un DTO category
+		$("#multisites").prop("checked", false);
+	}
+	
+	/**
 	 * disableButtons
 	 * 
-	 * Permet de changer l'état des 3 boutons
+	 * Permet de changer l'état des 2 boutons
 	 * 
-	 * @param btnCreate Indique si le bouton "Créer" doit être désactivé
-	 * @param btnModify Indique si le bouton "Modifier" doit être désactivé
-	 * @param btnCancel Indique si le bouton "Annuler" doit être désactivé
+	 * @param btnSave Indique si le bouton "Enregistrer" doit être désactivé
+	 * @param btnDelete Indique si le bouton "Supprimer" doit être désactivé
 	 */
-	function disableButtons(btnCreate, btnModify, btnCancel) {
-		$("#btnCreate").prop("disabled", btnCreate);
-		$("#btnModify").prop("disabled", btnModify);
-		$("#btnCancel").prop("disabled", btnCancel);
+	function disableButtons(btnSave, btnDelete) {
+		$("#btnSave").prop("disabled", btnSave);
+		$("#btnDelete").prop("disabled", btnDelete);
 	}
 	
 	/**
@@ -90,6 +123,8 @@
 	 * Charge la liste de tous les utilisateurs
 	 */
 	function queryAllEmployees() {
+		employeeList = [];
+		
 		$.ajax({
 			url: "http://localhost:8080/RED_WEBSERVICE/rest/employee",
 			type: "GET",
@@ -179,13 +214,58 @@
 		});
 	}
 	
+	/**
+	 * queryDeleteEmployee
+	 * 
+	 * Supprime un utilisateur
+	 */
+	function queryDeleteEmployee(employee) {
+		if ( employee && employee.id !== 0 ) {
+			$.ajax({
+				url: "http://localhost:8080/RED_WEBSERVICE/rest/employee/" + employee.id,
+				type: "DELETE",
+				dataType: "json",
+				contentType: "application/json",
+			}).done(function(data) {
+				console.log("[DEBUG] employee " + employee.lastname + " deleted successfully");
+				
+				queryAllEmployees();
+				employeeSelected = null;
+			}).fail(function() {
+				// Handling errors here ...
+			}).always(function() {
+				// Action to do after the call of done or fail
+			});
+		}
+	}
+	
 	/*
 	 * Events functions
 	 */
-	$("#selectEmployee").keyup(function() {
+	$("#selectEmployee").keyup(function(e) {
 		var searchStr = $(this).val().toLowerCase();
+		var found = false;
 		
 		if ( $(this).val() ) {
+			// Populate the fields if the search string match with any employee fullname
+			for ( var index = 0; index < employeeList.length; index++ ) {
+				if ( searchStr === employeeList[index].fullname().toLowerCase() ) {
+					found = true;
+					employeeSelected = employeeList[index];// = true;
+					populateFieldsFromEmployee(employeeList[index]);
+					disableButtons(false, false);
+					break;
+				}
+			}
+			
+			// Clear all fields if the search string differ from any employee fullname but previously selected
+			if ( !found && employeeSelected ) {
+				employeeSelected = null;// = false;
+				clearAllFields(false);
+				disableButtons(false, true);
+			}
+			
+			// Autocompletion
 			for ( var index = 0; index < employeeList.length; index++ ) {
 				var subStr = employeeList[index].fullname().toLowerCase().substring(0, searchStr.length);
 		    	
@@ -198,51 +278,37 @@
 		}
 		else {
 			refreshQuickSelectionView(0);
-			clearAllFields();
-			disableButtons(false, true, true);
+			clearAllFields(true);
+			disableButtons(false, true);
 		}
 	});
 
 	// Delegated events have the advantage that they can process events from children elements that are added to the document at a later time
-	$("#autoCompletion").on("click", "#employeeTable td", function(e) {
+	// In that case #employeeTable is created dynamically so the classic syntax $().keyup will not respond to the event callback
+	$("#autoCompletion").on("click", "#employeeTable td", function() {
 		var selectedRowIndex = $(this).attr("data-row");
 		
-		// When selected, the fullname much appears in the search input
-		$("#selectEmployee").val(employeeList[selectedRowIndex].fullname());
-		
-		// Now populate all fields
-		$("#inputLastName").val(employeeList[selectedRowIndex].lastname);
-		$("#inputFirstName").val(employeeList[selectedRowIndex].name);		
-		// FIXME: les données doivent être contenues dans un DTO site
-		$("#sites").val(employeeList[selectedRowIndex].site);
-		// FIXME: les données doivent être contenues dans un DTO structure
-		$("#structures").val(employeeList[selectedRowIndex].structure);
-		$("#inputPassword").val(employeeList[selectedRowIndex].password);
-		$("#inputConfirmPassword").val(employeeList[selectedRowIndex].password);
-		// FIXME: les données doivent être contenues dans un DTO category
-		$("#utlimultisites").prop("checked", true);
-		
-		// Then change the buttons state
-		disableButtons(true, false, false);
+		employeeSelected = employeeList[selectedRowIndex];// = true;
+		$("#selectEmployee").val(employeeList[selectedRowIndex].fullname()); // When selected, the fullname much appears in the search input
+		populateFieldsFromEmployee(employeeList[selectedRowIndex]);
+		disableButtons(false, false);
 	});
 	
-	$("#btnCreate").click(function(e) {
+	$("#btnSave").click(function() {
 		
 	});
 	
-	$("#btnModify").click(function(e) {
-		
-	});
-	
-	$("#btnCancel").click(function(e) {
+	$("#btnDelete").click(function() {
+		queryDeleteEmployee(employeeSelected);
 		refreshQuickSelectionView(0);
-		clearAllFields();
-		disableButtons(false, true, true);
+		clearAllFields(true);
+		disableButtons(false, true);
 	});
 	
 	/*
 	 * Flow of execution of the page
 	 */
 	initialization();
-
+	// I'am happy with application driven by event handling ^^
+	
 }).call(this);

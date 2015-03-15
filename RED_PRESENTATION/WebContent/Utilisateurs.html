@@ -56,7 +56,7 @@
         <!-- Sélection usager -->
         <h2>Sélectionner un utilisateur</h2>
         
-        <input id="selectEmployee" type="text" class="form-control">
+        <input id="selectEmployee" type="text" class="form-control" autocomplete="off">
         <div id="autoCompletion" style="height: 300px; overflow: auto">
         </div>
         <!-- 
@@ -111,7 +111,7 @@
         </div>
       </div>
       <div id="checkUtilMulti" class="row ligneBlocPrincipal">
-        <input type="checkbox" name="utlimultisites" id="utlimultisites"/>
+        <input type="checkbox" name="multisites" id="multisites"/>
           <h5>Utilisateur multi sites</h5>
       </div>
       <div id="champNomPrenom" class="row ligneBlocPrincipal">
@@ -125,9 +125,14 @@
         </div>
       </div> 
       <div id="btnsUsager" class="row ligneBlocPrincipal">
+        <button id="btnDelete" type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4">Supprimer</button>
+        <button id="btnSave" type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4">Enregistrer</button>
+
+        <!-- 
         <button id="btnCancel" type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4" disabled="disabled"> Annuler</button>
         <button id="btnModify" type="submit" class="btn btn-lg  btn-warning glyphicon glyphicon-retweet col-md-4" disabled="disabled"> Modifier</button>
         <button id="btnCreate" type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" > Créer</button>
+        -->
         <!-- 
         <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" onclick="creationuser();"> Créer</button>
       	-->
