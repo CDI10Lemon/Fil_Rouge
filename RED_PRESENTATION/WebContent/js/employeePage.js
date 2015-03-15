@@ -1,5 +1,5 @@
 /**
- * employeePage
+ * employeePage.js
  * 
  * Implementation des fonctionnalités de la page Utilisateurs
  * 
@@ -21,39 +21,6 @@
 	
 	var employeeList = [];
 
-	/**
-	 * Employee
-	 * 
-	 * Prototype employee, DTO des utilisateurs
-	 * 
-	 * @param id id technique de l'utilisateur
-	 * @param name Nom de l'utilisateur
-	 * @param lastname Prénom de l'utilisateur
-	 * @param password Mot de passe de l'utilisateur
-	 * @param category DTO de type Category
-	 * @param structure DTO de type Structure
-	 * @param site DTO de type Site
-	 */
-	var Employee = function(id, name, lastname, password, category, structure, site) {
-		this.id = id || 0;
-		this.name = name || "";
-		this.lastname = lastname || "";
-		this.password = password || "";
-		// FIXME: Stockage des DTO category, structure et site
-		this.category = category || "";
-		this.structure = structure || "";
-		this.site = site || "";
-		
-		/**
-		 * fullname
-		 * 
-		 * @return string Renvoie la construction du NOM + Prenom
-		 */
-		this.fullname = function () {
-			return this.lastname + " " + this.name;
-		};
-	};
-	
 	/**
 	 * initilization
 	 * 
@@ -128,26 +95,29 @@
 			type: "GET",
 			dataType: "json",
 			contentType: "application/json",
-			success: function(data) {
-				for ( var index = 0; index < data.length; index++ ) {
-					var employee = new Employee(data[index].idEmployee, data[index].name, data[index].lastname, data[index].password, data[index].category, data[index].structure, data[index].site);
-					
-					employeeList.push(employee);
-				}
+		}).done(function(data) {
+			for ( var index = 0; index < data.length; index++ ) {
+				var employee = new Employee(data[index].idEmployee, data[index].name, data[index].lastname, data[index].password, data[index].category, data[index].structure, data[index].site);
 				
-				employeeList.sort(function(itemA, itemB) {
-					  var a = itemA.lastname.toLowerCase();
-					  var b = itemB.lastname.toLowerCase();
-
-					  if( a < b )
-					    return -1;
-					  else if( a > b )
-					    return 1;
-					 return 0;
-					});
-        	
-				refreshQuickSelectionView(0);
+				employeeList.push(employee);
 			}
+			
+			employeeList.sort(function(itemA, itemB) {
+				  var a = itemA.lastname.toLowerCase();
+				  var b = itemB.lastname.toLowerCase();
+
+				  if( a < b )
+				    return -1;
+				  else if( a > b )
+				    return 1;
+				 return 0;
+				});
+    	
+			refreshQuickSelectionView(0);
+		}).fail(function() {
+			// Handling errors here ...
+		}).always(function() {
+			// Action to do after the call of done or fail
 		});
 	}
 	
@@ -162,18 +132,21 @@
 			type: "GET",
 			dataType: "json",
 			contentType: "application/json",
-			success: function(data) {
-				var $option;
+		}).done(function(data) {
+			var $option;
 
-				for ( var index = 0; index < data.length; index++ ) {
-					$option = $("<option value=" + data[index].idStructure + ">" + data[index].name + "</option>");
-					$("#structures").append($option);
-				}
-				
-				// Head of the selection is empty (at option tag of index zero)
-				$option = $("<option value=" + 0 + "></option>");
-				$("#structures").prepend($option);
+			for ( var index = 0; index < data.length; index++ ) {
+				$option = $("<option value=" + data[index].idStructure + ">" + data[index].name + "</option>");
+				$("#structures").append($option);
 			}
+			
+			// Head of the selection is empty (at option tag of index zero)
+			$option = $("<option value=" + 0 + "></option>");
+			$("#structures").prepend($option);
+		}).fail(function() {
+			// Handling errors here ...
+		}).always(function() {
+			// Action to do after the call of done or fail
 		});
 	}
 	
@@ -188,18 +161,21 @@
 			type: "GET",
 			dataType: "json",
 			contentType: "application/json",
-			success: function(data) {
-				var $option;
+		}).done(function(data) {
+			var $option;
 
-				for ( var index = 0; index < data.length; index++ ) {
-					$option = $("<option value=" + data[index].idSite + ">" + data[index].name + "</option>");
-					$("#sites").append($option);
-				}
-				
-				// Head of the selection is empty (at option tag of index zero)
-				$option = $("<option value=" + 0 + "></option>");
-				$("#sites").prepend($option);
+			for ( var index = 0; index < data.length; index++ ) {
+				$option = $("<option value=" + data[index].idSite + ">" + data[index].name + "</option>");
+				$("#sites").append($option);
 			}
+			
+			// Head of the selection is empty (at option tag of index zero)
+			$option = $("<option value=" + 0 + "></option>");
+			$("#sites").prepend($option);
+		}).fail(function() {
+			// Handling errors here ...
+		}).always(function() {
+			// Action to do after the call of done or fail
 		});
 	}
 	
