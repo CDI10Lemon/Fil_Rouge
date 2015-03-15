@@ -218,7 +218,9 @@
 	/**
 	 * queryDeleteEmployee
 	 * 
-	 * Supprime un utilisateur
+	 * Supprimer un utilisateur
+	 * 
+	 * @param employee Objet de type Employee à supprimer
 	 */
 	function queryDeleteEmployee(employee) {
 		if ( employee && employee.id !== 0 ) {
@@ -233,6 +235,62 @@
 				employeeList.splice(employeeList.indexOf(employee), 1);
 				employeeSelected = null;
 				refreshQuickSelectionView(0); // We are async...
+			}).fail(function() {
+				// Handling errors here ...
+			}).always(function() {
+				// Action to do after the call of done or fail
+			});
+		}
+	}
+	
+	/**
+	 * queryUpdateEmployee
+	 * 
+	 * Update d'un utilisateur
+	 * 
+	 * @param employee Objet de type Employee à mettre à jour
+	 */
+	function queryUpdateEmployee(employee) {
+		if ( employee && employee.id !== 0 ) {
+			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
+			$.ajax({
+				url: "http://localhost:8080/RED_WEBSERVICE/rest/employee/" + employee.id,
+				type: "PUT",
+				data: JSON.stringify(employee),
+				dataType: "json",
+				contentType: "application/json",
+			}).done(function(data) {
+				console.log("[DEBUG] employee " + employee.lastname + " updated successfully");
+				
+
+			}).fail(function() {
+				// Handling errors here ...
+			}).always(function() {
+				// Action to do after the call of done or fail
+			});
+		}
+	}
+	
+	/**
+	 * queryCreateEmployee
+	 * 
+	 * Créer un nouvel utilisateur
+	 * 
+	 * @param employee Objet de type Employee à mettre à jour
+	 */
+	function queryCreateEmployee(employee) {
+		if ( employee && employee.id !== 0 ) {
+			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
+			$.ajax({
+				url: "http://localhost:8080/RED_WEBSERVICE/rest/employee",
+				type: "POST",
+				data: JSON.stringify(employee),
+				dataType: "json",
+				contentType: "application/json",
+			}).done(function(data) {
+				console.log("[DEBUG] employee " + employee.lastname + " created successfully");
+				
+
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
