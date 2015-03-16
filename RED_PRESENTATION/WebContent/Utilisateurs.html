@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" ng-app="cyberbase"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!-- ng-app="cyberbase"--> <!--<![endif]-->
 <head>
      <meta charset="utf-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,14 +13,16 @@
      <link rel="stylesheet" href="css/bootstrap.min.css">
      <link rel="stylesheet" href="css/style.css">
      <link rel="icon" href="images/lemon.ico">
-  <script type ="text/javascript" src="js/angular.min.js"></script>
+  	 <!-- 
+  	 <script type ="text/javascript" src="js/angular.min.js"></script>
+	 -->
 </head>
 <body>
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <div class="container">
-           <header id="header" class="page-header">
+   <header id="header" class="page-header">
                  <nav class="navbar navbar-inverse navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -47,114 +49,105 @@
       </header><!-- /header -->
 <!-- ********************************************************** Contenu ************************************************************************ -->
 
-<div class="row">
-  <aside id="blocUsagerG" class="col-md-3">
-    <form id="form_blocUsagerG" class="form-signin" role="search">
-      <div class="form-group">
-        <!-- Sélection usager -->
-        <h2>Sélectionner un utilisateur</h2>
-         
-        <input id="selectEmployee" type="search" class="form-control" placeholder="Selectionner...">
+  		<div id="popup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
+  			<div class="modal-dialog">
+    			<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        					<span aria-hidden="true">&times;</span>
+        				</button>
+        				<h4 class="modal-title" id="popupTitle">Supprimer un utilisateur</h4>
+     				</div>
+        			<div class="modal-body">
+            			<span>Etes-vous sur(e) de vouloir supprimer</span>
+        			</div>
+        			<div class="modal-footer">
+        				<button id="btnPopupCancel" type="button" class="btn btn-lg btn-danger col-md-4" data-dismiss="modal">Annuler</button>
+        				<button id="btnPopupConfirm" type="button" class="btn btn-lg btn-success col-md-4">Confirmer</button>
+      				</div>
+    			</div> <!-- /modal-content -->
+  			</div> <!-- /modal-dialog -->
+		</div> <!-- /modal -->
+	<div class="row">
+  		<aside id="blocUsagerG" class="col-md-3">
+    		<form id="form_blocUsagerG" class="form-signin" role="search">
+      			<div class="form-group">
+        			<!-- Sélection usager -->
+        			<h2>Sélectionner un utilisateur</h2>
         
-        <!-- 
-        <input list="employees" name="employeesList">
-        -->
-        <datalist id="employees">
-        </datalist>
-        <div id="testAutoCompUtilisateur" style="height: 300px; overflow: auto">
-        </div>
-        <!--
-			<textarea id="autoCompUtilisateur" name="autoCompUtilisateur" rows="10" class="form-control"></textarea>  
-      	-->
-      </div>
-    </form>
-  </aside>
-  <div class="col-md-1"></div>
-  <section id="blocPrincipal" class="col-md-8">
-    <form id="form_blocPrincipal" class="form-signin" role="search">
-      <div id="champNomPrenom" class="row ligneBlocPrincipal">
-        <div class="row">
-          <label for "inputLastName" class="col-md-6 champLabel">Nom</label>
-          <label for "inputFirstName" class="col-md-6 champLabel">Prénom</label>
-        </div>
-        <div class="row">
-          <input type="text" class="form-control col-md-6 champInputG" name="inputLastName" id="inputLastName" placeholder="">                      
-          <input type="text" class="form-control col-md-6 champInputD" name="inputFirstName" id="inputFirstName" placeholder="">
-        </div>
-      </div>
-      <div id="champSelection" class="row ligneBlocPrincipal">
-        <div class="row">
-          <label for="districts" class="col-md-6 champLabel">Site De Reférence</label>
-          <label for="structure" class="col-md-6 champLabel">Structure d'appartenence</label>
-        </div>
-        <div class="row">
-          <select name="districts" id="districts" class="form-control champInputG col-md-6">
-            <option value="centre">Centre-ville</option>
-            <option value="chantenay">Bellevue - Chantenay - Ste Anne</option>
-            <option value="zola">Dervallières - Zola</option>
-            <option value="felix">Hauts-Pavés - St Félix</option>
-            <option value="donatien">Malakoff - St Donatien</option>
-            <option value="ile">Île de Nantes</option>
-            <option value="breil">Breil - Barberie</option>
-            <option value="nord">Nantes Nord</option>
-            <option value="erdre">Nantes Erdre</option>
-            <option value="doulon">Doulon - Bottière</option>
-            <option value="sud">Nantes Sud</option>
-          </select> 
-          <select name="structure" id="structure" class="form-control champInputD col-md-6">
-            <option value="0">Structure d'appartenance</option>
-            <option value="1" ng-model="employee.structure">Pôle Emploi</option>
-            <option value="2" ng-model="employee.structure">APEC</option>
-            <option value="3" ng-model="employee.structure">Mission Locale</option>
-          </select>
-        </div>
-      </div>
-      <div id="checkUtilMulti" class="row ligneBlocPrincipal">
-        <input type="checkbox" name="utlimultisites" id="utlimultisites"/>
-          <h5>Utilisateur multi sites</h5>
-      </div>
-      <div id="champNomPrenom" class="row ligneBlocPrincipal">
-        <div class="row">
-          <label for "inputPassword" class="col-md-6 champLabel">Mot de passe</label>
-          <label for "inputConfirmPassword" class="col-md-6 champLabel">Confirmation du mot de passe</label>
-        </div>
-        <div class="row">
-          <input type="text" class="form-mdp col-md-6 champInputG" name="inputPassaword" id="inputPassaword" placeholder="">
-          <input type="text" class="form-mdp col-md-6 champInputD" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="">
-        </div>
-      </div> 
-      <div id="btnsUsager" class="row ligneBlocPrincipal">
-        <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4"> Annuler</button>
-        <button type="submit" class="btn btn-lg btn-warning glyphicon glyphicon-retweet col-md-4"> Modifier</button>
-        <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4" onclick="creationuser();"> Créer</button>
-      </div>
-    </form>
-  </section>
-</div>
-   <footer class="footer">
-      <div class="container">
-        <span class="footerLink">
-          <a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
-        </span>
-        <span class="footerLink"> | </span>
-        <span id="mentionLink">
-          <a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
-        </span>
-        <span class="divider"> | </span>
-        <span class="footerLink">
-          <a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
-        </span>
-      </div>
-    </footer>
-</div> <!-- /container -->
+        			<input id="selectEmployee" type="text" class="form-control" autocomplete="off">
+        			<div id="autoCompletion" style="height: 300px; overflow: auto">
+        			</div>
+      			</div>
+    		</form>
+  		</aside>
+  		<div class="col-md-1"></div>
+  			<section id="blocPrincipal" class="col-md-8">
+    			<form id="form_blocPrincipal" class="form-signin" role="search">
+     				<div id="champNomPrenom" class="row ligneBlocPrincipal">
+        				<div class="row">
+          					<label for="inputLastName" class="col-md-6 champLabel">Nom</label>
+          					<label for="inputFirstName" class="col-md-6 champLabel">Prénom</label>
+        				</div>
+        				<div class="row">
+          					<input type="text" class="form-control col-md-6 champInputG" name="inputLastName" id="inputLastName" placeholder="">                      
+          					<input type="text" class="form-control col-md-6 champInputD" name="inputFirstName" id="inputFirstName" placeholder="">
+        				</div>
+      				</div>
+      				<div id="champSelection" class="row ligneBlocPrincipal">
+        				<div class="row">
+          					<label for="sites" class="col-md-6 champLabel">Site de reférence</label>
+          					<label for="structures" class="col-md-6 champLabel">Structure d'appartenence</label>
+       					</div>
+        				<div class="row">
+          					<select name="sites" id="sites" class="form-control champInputG col-md-6"></select> 
+          					<select name="structures" id="structures" class="form-control champInputD col-md-6"></select>
+        				</div>
+      				</div>
+      				<div id="checkUtilMulti" class="row ligneBlocPrincipal">
+        				<input type="checkbox" name="multisites" id="multisites"/>
+          				<h5>Utilisateur multi sites</h5>
+      				</div>
+      				<div id="champNomPrenom" class="row ligneBlocPrincipal">
+        				<div class="row">
+          					<label for="inputPassword" class="col-md-6 champLabel">Mot de passe</label>
+          					<label for="inputConfirmPassword" class="col-md-6 champLabel">Confirmation du mot de passe</label>
+        				</div>
+        				<div class="row">
+          					<input type="text" class="form-mdp col-md-6 champInputG" name="inputPassword" id="inputPassword" placeholder="">
+          					<input type="text" class="form-mdp col-md-6 champInputD" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="">
+        				</div>
+      				</div> 
+      				<div id="btnsUsager" class="row ligneBlocPrincipal">
+        				<button id="btnDelete" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4">Supprimer</button>
+        				<button id="btnSave" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4">Enregistrer</button>
+      				</div>
+    			</form>
+			</section>
+		</div>
+   		<footer class="footer">
+      		<div class="container">
+        		<span class="footerLink">
+          			<a href="http://www.cyber-base.org/institutionnel/home.do">Cyber-base</a>
+        		</span>
+        		<span class="footerLink"> | </span>
+        		<span id="mentionLink">
+          			<a href="http://www.cyber-base.org/institutionnel/cgu/afficherCgu.do">Mentions légales</a>
+        		</span>
+        		<span class="divider"> | </span>
+        		<span class="footerLink">
+          			<a href="http://www.cyber-base.org/institutionnel/contact/afficherContact.do?">Contact</a>
+        		</span>
+      		</div>
+    	</footer>
+	</div> <!-- /container -->
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-1.11.2.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
-<!-- Angular app -->
-<script src="js/cyberbase.js"></script>
-<script src="js/creationuser.js"></script>
-<script src="js/pageEmployee.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- JS scripts -->
+	<script src="js/dto.js"></script>
+	<script src="js/employeePage.js"></script>
 </body>
 </html>

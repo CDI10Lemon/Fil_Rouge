@@ -1,17 +1,13 @@
 
 
+/*
 
 function creationuser()
 {
 
-
-
-
   var dataformulaire = {
            	name : $("#inputLastName").val(),
             lastname : $("#inputFirstName").val(),
-           
-            
 
         }
 
@@ -27,10 +23,9 @@ $.ajax({
             success: function (data) {
               
             }
-          
+     
         });
 
-
 }
-
+*/
 
