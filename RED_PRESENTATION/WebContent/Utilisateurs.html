@@ -52,9 +52,20 @@
     <form id="form_blocUsagerG" class="form-signin" role="search">
       <div class="form-group">
         <!-- Sélection usager -->
-        <h2>Sélectionner un utlisateur</h2>
-        <input type="text" class="form-control" placeholder="Selectionner...">
-        <textarea name="autoCompUtilisateur" rows="10" class="form-control"></textarea>  
+        <h2>Sélectionner un utilisateur</h2>
+         
+        <input id="selectEmployee" type="search" class="form-control" placeholder="Selectionner...">
+        
+        <!-- 
+        <input list="employees" name="employeesList">
+        -->
+        <datalist id="employees">
+        </datalist>
+        <div id="testAutoCompUtilisateur" style="height: 300px; overflow: auto">
+        </div>
+        <!--
+			<textarea id="autoCompUtilisateur" name="autoCompUtilisateur" rows="10" class="form-control"></textarea>  
+      	-->
       </div>
     </form>
   </aside>
@@ -144,5 +155,6 @@
 <!-- Angular app -->
 <script src="js/cyberbase.js"></script>
 <script src="js/creationuser.js"></script>
+<script src="js/pageEmployee.js"></script>
 </body>
 </html>
