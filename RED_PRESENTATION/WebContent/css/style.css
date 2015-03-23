@@ -6,8 +6,6 @@ body{
 footer{
 	margin-top:40px;
 }
-
-
 /* ------------------------------------ login.html ---------------------------------------------- */
 /* placement section */
 #blocLogin{
@@ -38,9 +36,6 @@ footer{
 }
 #structure{
 	margin-bottom: 40px;
-}
-.selectTitre{
-	display:none;
 }
 /* placement boutons dans formulaire */
 .bouton{
@@ -137,5 +132,22 @@ footer{
 }
 #btnsUsager button{
 	width: 150px;
+	margin-right:20px;
+}
+
+/* ------------------------------------ Postes.html ---------------------------------------------- */
+
+.salleName{
+	width: auto;
+	height: 165px;
+}
+
+#btnLiberer{
+	margin-top: 25px;
+	margin-bottom: 25px;
+	float: right;
+}
+#btnsLiberer button{
+	width: 200px;
 	margin-right:20px;
 }

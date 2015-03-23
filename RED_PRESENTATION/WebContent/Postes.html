@@ -75,31 +75,25 @@
                   <input type="number" min="1" max="100" />
                   </p>
                 </br>
-                <input type="button" class="btn btn-lg btn-success btn-block" value="valider" onclick="">
+                <button type="submit" class="btn btn-lg btn-success glyphicon glyphicon-check"> Valider</button>
     
           </div>
         </form>
       </aside>
       <div class="col-md-1"></div>
       <section id="blocPrincipal" class="col-md-8">
-       <label for="site">Site de l'utilisateur (par défaut)</label>
+       <h3>Site de l'utilisateur (par défaut)</h3>
               <select name="site" id="site" class="form-control">
-               </select>
-               </br>
-               <div id="salle-credo">
-               <textarea name="salle credo" rows="15" cols="128"class="credo"> Salle credo 
-              
-               </textarea>
-               </div>
-
-                </br>
-                <div id="salle-apidum">
-                <textarea name="salle apidum" rows="10" cols="128" class="apidum"> Salle apidum</textarea> 
-                </div>
-               </br>
-        <div id="btnsUsagers">
-            <input type="button" class="btn btn-lg btn-danger btn-block" value="Libérer tous les postes" onclick="">
-          </div>
+              </select>
+              <div class="form-control salleName">
+                <h4>Salle credo</h4>
+              </div>
+              <div class="form-control salleName">
+                <h4>Salle apidum</h4>
+              </div>
+              <div id="btnLiberer">
+                <button type="submit" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign"> Libérer tous les postes</button>
+              </div>
       </section>
     </div>
 
