@@ -9,6 +9,49 @@
 
 
 /**
+ * Site
+ *
+ * Prototype site, DTO des sites
+ * 
+ * @param id id technique du site
+ * @param name Nom du site
+ * @param maxunit Nombre de poste maximum
+ */
+var Site = function(id, name, maxUnit) {
+	this.id = id || 0;
+	this.name = name || "";
+	this.maxUnit = maxUnit || 0;
+};
+
+/**
+ * Structure
+ * 
+ * Prototype structure, DTO des structures
+ * 
+ * @param id id technique de la structure
+ * @param name Nom de la structure d'appartenance
+ */
+var Structure = function(id, name) {
+	this.id = id || 0;
+	this.name = name || "";
+};
+
+/**
+ * Category
+ * 
+ * Prototype category, DTO des catagories
+ * 
+ * @param id id technique de la categorie
+ * @param name Nom de la catégorie
+ * @param sedentary Flag indiquant si l'employee est mobile ou pas
+ */
+var Category = function(id, name, sedentary) {
+	this.id = id || 0;
+	this.name = name || "";
+	this.sedentary = sedentary || true;
+};
+
+/**
  * Employee
  * 
  * Prototype employee, DTO des utilisateurs
@@ -26,10 +69,9 @@ var Employee = function(id, name, lastname, password, category, structure, site)
 	this.name = name || "";
 	this.lastname = lastname || "";
 	this.password = password || "";
-	// FIXME: Stockage des DTO category, structure et site
-	this.category = category || "";
-	this.structure = structure || "";
-	this.site = site || "";
+	this.category = category || null;
+	this.structure = structure || null;
+	this.site = site || null;
 
 	/**
 	 * fullname
