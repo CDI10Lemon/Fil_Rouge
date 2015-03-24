@@ -49,9 +49,11 @@
       </header><!-- /header -->
 <!-- ********************************************************** Contenu ************************************************************************ -->
 
-  		<div id="popup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
+	<div class="row">
+  		
+  		<div id="popup" class="modal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="popupTitle" aria-hidden="false">
   			<div class="modal-dialog">
-    			<div class="modal-content">
+     			<div class="modal-content">
         			<div class="modal-header">
         				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
         					<span aria-hidden="true">&times;</span>
@@ -62,13 +64,13 @@
             			<span>Etes-vous sur(e) de vouloir supprimer</span>
         			</div>
         			<div class="modal-footer">
-        				<button id="btnPopupCancel" type="button" class="btn btn-lg btn-danger col-md-4" data-dismiss="modal">Annuler</button>
-        				<button id="btnPopupConfirm" type="button" class="btn btn-lg btn-success col-md-4">Confirmer</button>
+        				<button id="btnPopupCancel" type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Annuler</button>
+        				<button id="btnPopupConfirm" type="button" class="btn btn-lg btn-success">Confirmer</button>
       				</div>
-    			</div> <!-- /modal-content -->
-  			</div> <!-- /modal-dialog -->
+    			</div> 
+  			</div>
 		</div> <!-- /modal -->
-	<div class="row">
+		
   		<aside id="blocUsagerG" class="col-md-3">
     		<form id="form_blocUsagerG" class="form-signin" role="search">
       			<div class="form-group">
@@ -119,6 +121,7 @@
         				</div>
       				</div> 
       				<div id="btnsUsager" class="row ligneBlocPrincipal">
+      				<!-- data-toggle="modal" data-target="#popup" -->
         				<button id="btnDelete" class="btn btn-lg btn-danger glyphicon glyphicon-warning-sign col-md-4">Supprimer</button>
         				<button id="btnSave" class="btn btn-lg btn-success glyphicon glyphicon-check col-md-4">Enregistrer</button>
       				</div>

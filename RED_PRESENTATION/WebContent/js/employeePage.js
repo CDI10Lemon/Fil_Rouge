@@ -354,11 +354,14 @@
 		disableButtons(false, false);
 	});
 	
-	$("#btnSave").click(function() {
-		
+	$("#btnSave").on("click", function(e) {
+		console.log("Save clicked");
 	});
 	
-	$("#btnDelete").click(function() {
+	$("#btnDelete").click( function() { 
+		console.log("Delete click");
+		
+		//e.preventDefault();
 		$("#popup").modal("show");
 
 		// TODO : queryDeleteEmployee est call par le bouton enregistrer de la popup
@@ -368,14 +371,31 @@
 		disableButtons(false, true);
 		*/
 	});
+	/*
+	$("#btnDelete").on("click", function(e) {
+		console.log("Delete clicked");
+		
+		//e.preventDefault();
+		$("#popup").modal("show");
+
+		// TODO : queryDeleteEmployee est call par le bouton enregistrer de la popup
+		//queryDeleteEmployee(employeeSelected);
+		
+		//clearAllFields(true);
+		//disableButtons(false, true);
+		
+	});
+	*/
 	
-	$(".modal").on("shown.bs.modal", function(){
+	$("#popup").on("shown-bs-modal", function() {
 		// TODO: ici modifier le DOM de la popup
+		console.log("popup shown");
 	});
 	
-	$(".modal").on("hidden.bs.modal", function(){
-		clearAllFields(true);
-		disableButtons(false, true);
+	$("#popup").on("hidden-bs-modal", function() {
+		console.log("popup hidden");
+		//clearAllFields(true);
+		//disableButtons(false, true);
 	});
 	
 	/*
