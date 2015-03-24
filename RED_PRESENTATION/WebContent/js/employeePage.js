@@ -4,7 +4,7 @@
  * Implementation des fonctionnalités de la page Utilisateurs
  * 
  * @author Sebastien PASSIER
- * @version 1.0.2
+ * @version 1.0.3
  * 
  * @Todo 
  * - Contrôles des champs via regexp
@@ -103,6 +103,14 @@
 		$("#inputConfirmPassword").val(employeeList.password);
 		// FIXME: les données doivent être contenues dans un DTO category
 		$("#multisites").prop("checked", false);
+	}
+	
+	function checkAllFields() {
+		var result = false;
+		
+		//if ( $("#inputLastName").val()  )
+		
+		return result;
 	}
 	
 	/**
@@ -356,47 +364,60 @@
 	
 	$("#btnSave").on("click", function(e) {
 		console.log("Save clicked");
+		
+		$("#popupCreateTitle").html("Créer un utilisateur");
+		$("#popupCreateMessage").html( " a été crée avec succès !");
+		$("#popupCreate").modal("show");
+		e.preventDefault();
+		
+		// TODO: ici soit queryCreateEmployee() soit queryUpdateEmployee(employeeSelected)
+		// un update est a faire lorsque employeeSelected !== null
+		// sinon c'est un creation
+		
+
 	});
 	
-	$("#btnDelete").click( function() { 
-		console.log("Delete click");
-		
-		//e.preventDefault();
+	$("#btnDelete").on("click", function(e) {
+		$("#popupTitle").html("Supprimer un utilisateur");
+		$("#popupMessage").html("Etes-vous sur(e) de vouloir supprimer :" + employeeSelected.fullname());
 		$("#popup").modal("show");
-
-		// TODO : queryDeleteEmployee est call par le bouton enregistrer de la popup
-		//queryDeleteEmployee(employeeSelected);
-		/*
+		e.preventDefault();
+	});
+	
+	$("#btnPopupCancel").on("click", function(e) {
+		$("#popup").modal("hide");
+		// Nothing more, just close the popup
+	});
+	
+	$("#btnPopupConfirm").on("click", function(e) {
+		$("#popup").modal("hide");
+		queryDeleteEmployee(employeeSelected);
 		clearAllFields(true);
 		disableButtons(false, true);
-		*/
 	});
-	/*
-	$("#btnDelete").on("click", function(e) {
-		console.log("Delete clicked");
-		
-		//e.preventDefault();
-		$("#popup").modal("show");
-
-		// TODO : queryDeleteEmployee est call par le bouton enregistrer de la popup
-		//queryDeleteEmployee(employeeSelected);
-		
-		//clearAllFields(true);
-		//disableButtons(false, true);
-		
-	});
-	*/
 	
-	$("#popup").on("shown-bs-modal", function() {
+	$("#btnPopupCreateAcknowledge").on("click", function(e) {
+		$("#popupCreate").modal("hide");
+
+		clearAllFields(true);
+		disableButtons(false, true);
+	});
+	
+	/*
+	$("#popup").on("shown-bs-modal", function(e) {
 		// TODO: ici modifier le DOM de la popup
 		console.log("popup shown");
+		return e.preventDefault();
 	});
 	
-	$("#popup").on("hidden-bs-modal", function() {
+	$("#popup").on("hidden-bs-modal", function(e) {
 		console.log("popup hidden");
+		return e.preventDefault();
+		
 		//clearAllFields(true);
 		//disableButtons(false, true);
 	});
+	*/
 	
 	/*
 	 * Flow of execution of the page

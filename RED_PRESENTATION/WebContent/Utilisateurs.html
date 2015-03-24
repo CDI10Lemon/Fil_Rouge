@@ -51,6 +51,25 @@
 
 	<div class="row">
   		
+  		  <div id="popupCreate" class="modal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="popupCreateTitle" aria-hidden="false">
+  			<div class="modal-dialog">
+     			<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        					<span aria-hidden="true">&times;</span>
+        				</button>
+        				<h4 class="modal-title" id="popupCreateTitle">Créer un utilisateur</h4>
+     				</div>
+        			<div class="modal-body">
+            			<span id="popupCreateMessage"></span>
+        			</div>
+        			<div class="modal-footer">
+        				<button id="btnPopupCreateAcknowledge" type="button" class="btn btn-lg btn-success">Ok</button>
+      				</div>
+    			</div> <!-- /content -->
+  			</div> <!-- /dialog -->
+		</div> <!-- /modal -->
+		
   		<div id="popup" class="modal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="popupTitle" aria-hidden="false">
   			<div class="modal-dialog">
      			<div class="modal-content">
@@ -61,14 +80,14 @@
         				<h4 class="modal-title" id="popupTitle">Supprimer un utilisateur</h4>
      				</div>
         			<div class="modal-body">
-            			<span>Etes-vous sur(e) de vouloir supprimer</span>
+            			<span id="popupMessage"></span>
         			</div>
         			<div class="modal-footer">
         				<button id="btnPopupCancel" type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Annuler</button>
         				<button id="btnPopupConfirm" type="button" class="btn btn-lg btn-success">Confirmer</button>
       				</div>
-    			</div> 
-  			</div>
+    			</div> <!-- /content -->
+  			</div> <!-- /dialog -->
 		</div> <!-- /modal -->
 		
   		<aside id="blocUsagerG" class="col-md-3">
