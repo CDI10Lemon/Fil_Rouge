@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="images/lemon.ico">
 	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/Underscore.js"></script>
 </head>
 <body>
         <!--[if lt IE 7]>
@@ -27,48 +28,39 @@
             				<img src="images/cyberbaselogo_login.jpg" alt="Logo Cyberbase" width="400px;" height="145px;">
             			</div>
             				<div ng-controller="loginCtrl">
-	            				<form novalidate ng-submit="formLogin()" class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
-		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="employee.lastname" ng-minlength="2" ng-maxlength="20">
+	            				<form novalidate ng-submit="connexion()" class=" simple-form form-signin" id="formLogin" name="formLogin">	  	
+		            				<input type="text" id="inputLastName" class="form-control" name="inputLastName" placeholder="Nom" required autofocus ng-model="ids.lastname" ng-minlength="2" ng-maxlength="20">
 		            				<div ng-messages="formLogin.inputLastName.error" ng-messages-include="erreurs.html" ng-if="myForm.$submitted"></div>
 
-		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="employee.name" ng-minlength="2" ng-maxlength="20">
+		            				<input type="text" id="inputFirstName" class="form-control" name="inputFirstName" placeholder="Prénom" required ng-model="ids.name" ng-minlength="2" ng-maxlength="20">
 		            				<div ng-messages="formLogin.inputFirstName.error" ng-messages-include="erreurs.html" ng-if="myForm.$submitted"></div>
 
 		            				<div class="control-group">
 		            					<div class="controls">
-		            						<select id="siteRef" class="form-control" ng-model="employee.site">	
-		            							<option value="" selected="selected" class="selectTitre">Site de référence</option>	        
-		            							<option value="1">Site 1</option>
-		            							<option value="2" >Site 2</option>
-		            							<option value="3" >Site 3</option>
-		            							<option value="4" >Site 4</option>
-		            							<option value="5" >Site 5</option>
-		            							<option value="6" >Site 6</option>
-		            							<option value="7" >Site 7</option>
-		            							<option value="8" >Site 8</option>
+		            						<select id="siteRef" class="form-control" ng-model="ids.site">	
+		            							<option value="" selected="selected" class="selectTitre">Site de référence</option>    
+		            							<option ng-repeat="site in siteDb" value="{{site.id}}">{{site.name}}</option>
 		            						</select>
 		            					</div>
 		            				</div>
 
 		            				<div class="control-group">
 		            					<div class="controls">
-		            						<select id="structure" class="form-control" ng-model="employee.structure">
+		            						<select id="structure" class="form-control" ng-model="ids.structure">
 		            							<option value="" selected="selected" class="selectTitre">Structure d'appartenance</option>
-		            							<option value="1" >Pôle Emploi</option>
-		            							<option value="2" >APEC</option>
-		            							<option value="3" >Mission Locale</option>
+		            							<option ng-repeat="structure in structureDb" value="{{structure.id}}">{{structure.name}}</option>
 		            						</select>
 		            					</div>
 		            				</div>
 		            				<div class="form-group">
-		            					<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="employee.password" ng-minlength="4">
+		            					<input type="password" id="inputPassword" class="form-control" name="Password" placeholder="Mot de passe" required ng-model="ids.password" ng-minlength="4">
 		            					<div ng-messages="formLogin.Password.error" ng-messages-include="erreurs.html" ></div>
 
 		            					<span id="btnRaz" class="bouton">
-		            					<input class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button" value="RAZ"/>
+		            						<input class="btn btn-lg btn-primary btn-block" ng-click="reset()" type="button" value="RAZ"/>
 		            					</span>
 		            					<span id="btnConnect" class="bouton">
-		            					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid">Se connecter</button>
+		            						<a href="Utilisateurs.html" class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formLogin.$invalid">Se connecter</a>
 		            					</span>
 		            				</div>
 	            				</form>

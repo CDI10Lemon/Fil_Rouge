@@ -37,10 +37,17 @@ footer{
 #structure{
 	margin-bottom: 40px;
 }
+.selectTitre{
+	display:none;
+}
 /* placement boutons dans formulaire */
 .bouton{
 	display:inline-block;
 	margin-top: 60px;
+}
+.bouton a{
+	display:inline-block;
+	margin-top:-40px;
 }
 #btnRaz{
 	margin-right:130px;
@@ -127,27 +134,11 @@ footer{
 	margin-bottom: 20px;
 }
 #btnsUsager{
+	margin-top:17px;
 	margin-bottom: 26px;
 	float: right;
 }
 #btnsUsager button{
 	width: 150px;
-	margin-right:20px;
-}
-
-/* ------------------------------------ Postes.html ---------------------------------------------- */
-
-.salleName{
-	width: auto;
-	height: 165px;
-}
-
-#btnLiberer{
-	margin-top: 25px;
-	margin-bottom: 25px;
-	float: right;
-}
-#btnsLiberer button{
-	width: 200px;
 	margin-right:20px;
 }
