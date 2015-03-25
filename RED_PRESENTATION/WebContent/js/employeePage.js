@@ -11,13 +11,15 @@
  * - Messages d'erreurs pour les  controles de champs 
  * - Messages d'erreurs pour les accès au service REST
  * - Créer/update un utilisateur
- * - Popup
  */
 
 (function() {
 	"use strict";
 
 	var employeeList = [];
+	var siteList = [];
+	var categoryList = [];
+	var structureList = [];
 	var employeeSelected = null;
 
 	/**
@@ -31,6 +33,7 @@
 		queryAllEmployees();
 		queryAllSites();
 		queryAllStructures();
+		queryAllCategories();
 
 		// Disable KEY_ENTER on input #selectedEmployee to prevent deletion
 		$("#selectEmployee").on('keypress keydown keyup', function(e) {
@@ -92,35 +95,35 @@
 	 * @param employee Objet de type Employee
 	 */
 	function populateFieldsFromEmployee(employee) {
-		var id = 0;
-		var checked = false;
-		
 		$("#inputLastName").val(employee.lastname);
 		$("#inputFirstName").val(employee.name);
 		
-		id = 0;
 		if ( employee.site ) {
-			id = employee.site.id;
+			$("#sites").val(employee.site.idSite);
+		} else {
+			$("#sites").val(0);
 		}
-		$("#sites").val(id);
 		
-		id = 0;
 		if ( employee.structure ) {
-			id = employee.structure.id;
+			$("#structures").val(employee.structure.idStructure);
+		} else {
+			$("#structures").val(0);
 		}
-		$("#structures").val(id);
 		
 		$("#inputPassword").val(employee.password);
 		$("#inputConfirmPassword").val(employeeList.password);
 		
 		if ( employee.category && employee.category.sedentary ) {
-			checked = true;
+			$("#multisites").prop("checked", true);
+		} else {
+			$("#multisites").prop("checked", false);
 		}
-		$("#multisites").prop("checked", checked);
 	}
 
 	/**
+	 * checkAllFields
 	 * 
+	 * Vérifie que tous les champs soient remplis et valide
 	 */
 	function checkAllFields() {
 		var result = "noerror";
@@ -139,14 +142,14 @@
 			return result;
 		}
 
-		if ( $("#sites").val() !== 0 ) {
+		if ( $("#sites").val() != 0 ) {
 			// TODO: regexp
 		} else {
 			result = "Aucun site est selectionné.<br/>Veuillez sélectionner un site";
 			return result;
 		}
 
-		if ( $("#structures").val() !== 0 ) {
+		if ( $("#structures").val() != 0 ) {
 			// TODO: regexp
 		} else {
 			result = "Aucune structure d'appartenance est selectionnée.<br/>Veuillez sélectionner une structure d'appartenance";
@@ -170,7 +173,11 @@
 	}
 
 	/**
+	 * showPopupWithError
 	 * 
+	 * Affiche uun popup d'erreur avec un message parametrable
+	 * 
+	 * @param error Le message d'erreur à afficher
 	 */
 	function showPopupWithError(error) {
 		$("#popupErrorMessage").html(error);
@@ -180,7 +187,7 @@
 	/**
 	 * disableButtons
 	 * 
-	 * Permet de changer l'état des 2 boutons
+	 * Permet de changer l'état des 2 boutons de la page (supprimer et enregistrer)
 	 * 
 	 * @param btnSave Indique si le bouton "Enregistrer" doit être désactivé
 	 * @param btnDelete Indique si le bouton "Supprimer" doit être désactivé
@@ -223,7 +230,6 @@
 				
 				var employee = new Employee(data[index].idEmployee,	data[index].name, data[index].lastname, data[index].password, category, structure, site);
 				employeeList.push(employee);
-				console.log(employee);
 			}
 
 			employeeList.sort(function(itemA, itemB) {
@@ -240,7 +246,7 @@
 
 			refreshQuickSelectionView(0);
 		}).fail(function() {
-			// H event.preventDefault();andling errors here ...
+			// Handling errors here ...
 		}).always(function() {
 			// Action to do after the call of done or fail
 		});
@@ -259,10 +265,14 @@
 			contentType : "application/json",
 		}).done( function(data) {
 			var $option;
-
+			var structure;
+			
 			for ( var index = 0; index < data.length; index++ ) {
 				$option = $("<option value=" + data[index].idStructure + ">" + data[index].name + "</option>");
 				$("#structures").append($option);
+				
+				structure = new Structure(data[index].idStructure,	data[index].name);
+				structureList.push(structure);
 			}
 
 			// Head of the selection is empty (at option tag of index zero)
@@ -281,6 +291,8 @@
 	 * Charge la liste de tous les sites
 	 */
 	function queryAllSites() {
+		siteList = [];
+		
 		$.ajax({
 			url : "http://localhost:8080/RED_WEBSERVICE/rest/site",
 			type : "GET",
@@ -288,10 +300,14 @@
 			contentType : "application/json",
 		}).done( function(data) {
 			var $option;
-
+			var site;
+			
 			for (var index = 0; index < data.length; index++) {
 				$option = $("<option value=" + data[index].idSite + ">"	+ data[index].name + "</option>");
 				$("#sites").append($option);
+				
+				site = new Site(data[index].idSite,	data[index].name, data[index].maxUnit);
+				siteList.push(site);
 			}
 
 			// Head of the selection is empty (at option tag of index zero)
@@ -303,7 +319,34 @@
 			// Action to do after the call of done or fail
 		});
 	}
-
+	
+	/**
+	 * queryAllCategories
+	 * 
+	 * Charge la liste de toutes les categories
+	 */
+	function queryAllCategories() {
+		categoryList = [];
+		
+		$.ajax({
+			url : "http://localhost:8080/RED_WEBSERVICE/rest/category",
+			type : "GET",
+			dataType : "json",
+			contentType : "application/json",
+		}).done( function(data) {
+			var category;
+			
+			for (var index = 0; index < data.length; index++) {
+				category = new Category(data[index].idCategory,	data[index].name, data[index].sedentary);
+				categoryList.push(category);
+			}
+		}).fail(function() {
+			// Handling errors here ...
+		}).always(function() {
+			// Action to do after the call of done or fail
+		});
+	}
+	
 	/**
 	 * queryDeleteEmployee
 	 * 
@@ -312,14 +355,15 @@
 	 * @param employee Objet de type Employee à supprimer
 	 */
 	function queryDeleteEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		if (employee && employee.idEmployee !== 0) {
 			$.ajax({
-				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.id,
+				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.idEmployee,
 				type : "DELETE",
 				dataType : "json",
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee "	+ employee.lastname + " deleted successfully");
+				
 				employeeList.splice(employeeList.indexOf(employee), 1);
 				employeeSelected = null;
 				refreshQuickSelectionView(0); // We are async...
@@ -339,16 +383,24 @@
 	 * @param employee Objet de type Employee à mettre à jour
 	 */
 	function queryUpdateEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		if (employee && employee.idEmployee !== 0) {
 			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
-				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.id,
+				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.idEmployee,
 				type : "PUT",
 				data : JSON.stringify(employee),
 				dataType : "json",
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee "	+ employee.lastname	+ " updated successfully");
+				
+				employeeSelected = null;
+				refreshQuickSelectionView(0); // We are async...
+				
+				$("#popupCreateTitle").html("Mettre à jour un utilisateur");
+				$("#popupCreateMessage").html(" a été mis à jour avec succès !");
+				$("#popupCreate").modal("show");
+				//e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -365,7 +417,7 @@
 	 * @param employee Objet de type Employee à mettre à jour
 	 */
 	function queryCreateEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		//if (employee && employee.idEmployee === 0) {
 			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
 				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee",
@@ -375,12 +427,20 @@
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee " + employee.lastname	+ " created successfully");
+				
+				employeeList.push(employee);
+				refreshQuickSelectionView(0); // We are async...
+				
+				$("#popupCreateTitle").html("Créer un utilisateur");
+				$("#popupCreateMessage").html(" a été crée avec succès !");
+				$("#popupCreate").modal("show");
+				//e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
 				// Action to do after the call of done or fail
 			});
-		}
+		//}
 	}
 
 	/*
@@ -393,7 +453,7 @@
 		if ( $(this).val() ) {
 			// Populate the fields if the search string match with any employee fullname
 			for ( var index = 0; index < employeeList.length; index++ ) {
-				if (searchStr === employeeList[index].fullname().toLowerCase()) {
+				if ( searchStr === employeeList[index].fullname().toLowerCase() ) {
 					found = true;
 					employeeSelected = employeeList[index];// = true;
 					populateFieldsFromEmployee(employeeList[index]);
@@ -402,8 +462,7 @@
 				}
 			}
 
-			// Clear all fields if the search string differ from any
-			// employee fullname but previously selected
+			// Clear all fields if the search string differ from any employee fullname but previously selected
 			if (!found && employeeSelected) {
 				employeeSelected = null;// = false;
 				clearAllFields(false);
@@ -414,7 +473,7 @@
 			for ( var index = 0; index < employeeList.length; index++ ) {
 				var subStr = employeeList[index].fullname().toLowerCase().substring(0, searchStr.length);
 
-				if (subStr === searchStr) {
+				if ( subStr === searchStr ) {
 					refreshQuickSelectionView(index);
 					return;
 				}
@@ -427,7 +486,7 @@
 	});
 
 	// Delegated events have the advantage that they can process events from children elements that are added to the document at a later time
-	// In that case #employeeTable is created dynamically so the classic syntax/ $().keyup will not respond to the event callback
+	// In that case #employeeTable is created dynamically so the classic syntax $().keyup will not respond to the event callback
 	$("#autoCompletion").on("click", "#employeeTable td", function() {
 		var selectedRowIndex = $(this).attr("data-row");
 
@@ -440,21 +499,37 @@
 	$("#btnSave").on("click", function(e) {
 		var error = checkAllFields();
 
-		console.log(error);
-
 		if (error === "noerror") {
-			// TODO: le code ci dessous est call pat la methode ajax de creation lorsque l'opération est reussie
-			$("#popupCreateTitle").html("Créer un utilisateur");
-			$("#popupCreateMessage").html(" a été crée avec succès !");
-			$("#popupCreate").modal("show");
-			e.preventDefault();
+			if ( employeeSelected ) {
+				queryUpdateEmployee(employeeSelected);
+			} else {
+				var index = $("#sites").val();
+				var site = new Site(siteList[index].idSite, siteList[index].name, siteList[index].maxUnit);
+				
+				index = $("#structures").val();
+				console.log("struc " + JSON.stringify(structureList[index]));
+				var structure = new Structure(structureList[index].idStructure, structureList[index].name);				
+				
+				// FIXME: il n'y a aucun champs pour spécifier la catégorie...
+				//var category = new Category(categoryList[index].idCategory, categoryList[index].name, categoryList[index].sedentary);
+				
+				//var employee = new Employee(null, $("#inputFirstName").val(), $("#inputLastName").val(), $("#inputPassword").val(), null, structure, site);
+				var employee = {
+					lastname : $("#inputLastName").val(),
+					name : $("#inputFirstName").val(),
+					password : $("#inputPassword").val()
+					//structure : structure
+					//site : site
+				};
+
+				queryCreateEmployee(employee);
+				
+
+			}
 		} else {
 			showPopupWithError(error);
 			e.preventDefault();
 		}
-		// TODO: ici soit queryCreateEmployee() soit queryUpdateEmployee(employeeSelected) un update est a faire lorsque employeeSelected !== null
-		// sinon c'est un creation
-
 	});
 
 	$("#btnDelete").on("click",	function(e) {
@@ -478,7 +553,6 @@
 
 	$("#btnPopupCreateAcknowledge").on("click", function(e) {
 		$("#popupCreate").modal("hide");
-
 		clearAllFields(true);
 		disableButtons(false, true);
 	});

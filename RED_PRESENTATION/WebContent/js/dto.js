@@ -4,7 +4,6 @@
  * Implementation de chacun des DTOs utilisés par l'application
  * 
  * @author Sebastien PASSIER
- * @version 1.0.0
  */
 
 
@@ -18,7 +17,7 @@
  * @param maxunit Nombre de poste maximum
  */
 var Site = function(id, name, maxUnit) {
-	this.id = id || 0;
+	this.idSite = id || 0;
 	this.name = name || "";
 	this.maxUnit = maxUnit || 0;
 };
@@ -32,7 +31,7 @@ var Site = function(id, name, maxUnit) {
  * @param name Nom de la structure d'appartenance
  */
 var Structure = function(id, name) {
-	this.id = id || 0;
+	this.idStructure = id || 0;
 	this.name = name || "";
 };
 
@@ -46,7 +45,7 @@ var Structure = function(id, name) {
  * @param sedentary Flag indiquant si l'employee est mobile ou pas
  */
 var Category = function(id, name, sedentary) {
-	this.id = id || 0;
+	this.idCategory = id || 0;
 	this.name = name || "";
 	this.sedentary = sedentary || true;
 };
@@ -65,7 +64,7 @@ var Category = function(id, name, sedentary) {
  * @param site DTO de type Site
  */
 var Employee = function(id, name, lastname, password, category, structure, site) {
-	this.id = id || 0;
+	this.idEmployee = id || 0;
 	this.name = name || "";
 	this.lastname = lastname || "";
 	this.password = password || "";
