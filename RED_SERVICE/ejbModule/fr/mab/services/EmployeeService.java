@@ -31,8 +31,7 @@ public class EmployeeService implements EmployeeServiceLocal {
 
 	@Override
 	public List<Employee> findAll() {
-		return entityManager.createNamedQuery("Employee.findAll")
-				.getResultList();
+		return entityManager.createNamedQuery("Employee.findAll").getResultList();
 	}
 
 	@Override

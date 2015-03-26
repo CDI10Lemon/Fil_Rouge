@@ -88,7 +88,7 @@
 	}
 
 	/**
-	 * populateFieldsFromEmployee
+	 * populateFieldsFromEmploemployeeSelectedyee
 	 * 
 	 * Alimente les différents champs de la page avec les données du DTO employee
 	 * 
@@ -267,6 +267,10 @@
 			var $option;
 			var structure;
 			
+			// Dummy DTO to shift the index (0 index do not exist in the DB)
+			structure = new Structure(0, "");
+			structureList.push(structure)
+			
 			for ( var index = 0; index < data.length; index++ ) {
 				$option = $("<option value=" + data[index].idStructure + ">" + data[index].name + "</option>");
 				$("#structures").append($option);
@@ -302,6 +306,10 @@
 			var $option;
 			var site;
 			
+			// Dummy DTO to shift the index (0 index do not exist in the DB)
+			site = new Site(0, "", 0);
+			siteList.push(site);
+			
 			for (var index = 0; index < data.length; index++) {
 				$option = $("<option value=" + data[index].idSite + ">"	+ data[index].name + "</option>");
 				$("#sites").append($option);
@@ -335,6 +343,10 @@
 			contentType : "application/json",
 		}).done( function(data) {
 			var category;
+			
+			// Dummy DTO to shift the index (0 index do not exist in the DB)
+			category = new Category(0,	"", true);
+			categoryList.push(category);
 			
 			for (var index = 0; index < data.length; index++) {
 				category = new Category(data[index].idCategory,	data[index].name, data[index].sedentary);
@@ -382,9 +394,8 @@
 	 * 
 	 * @param employee Objet de type Employee à mettre à jour
 	 */
-	function queryUpdateEmployee(employee) {
+	function queryUpdateEmployee(employee, afterCreate) {
 		if (employee && employee.idEmployee !== 0) {
-			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
 				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.idEmployee,
 				type : "PUT",
@@ -395,12 +406,22 @@
 				console.log("[DEBUG] employee "	+ employee.lastname	+ " updated successfully");
 				
 				employeeSelected = null;
+				if ( afterCreate ) {
+					employeeList.push(employee);
+					
+					employeeList.sort(function(itemA, itemB) {
+						var a = itemA.lastname.toLowerCase();
+						var b = itemB.lastname.toLowerCase();
+
+						if ( a < b )
+							return -1;
+						else if ( a > b )
+							return 1;
+
+						return 0;
+					});
+				}
 				refreshQuickSelectionView(0); // We are async...
-				
-				$("#popupCreateTitle").html("Mettre à jour un utilisateur");
-				$("#popupCreateMessage").html(" a été mis à jour avec succès !");
-				$("#popupCreate").modal("show");
-				//e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -418,7 +439,6 @@
 	 */
 	function queryCreateEmployee(employee) {
 		//if (employee && employee.idEmployee === 0) {
-			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
 				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee",
 				type : "POST",
@@ -426,15 +446,18 @@
 				dataType : "json",
 				contentType : "application/json",
 			}).done( function(data) {
-				console.log("[DEBUG] employee " + employee.lastname	+ " created successfully");
+				var index = $("#sites").val();
+				var site = new Site(siteList[index].idSite, siteList[index].name, siteList[index].maxUnit);
+				index = $("#structures").val();
+				var structure = new Structure(structureList[index].idStructure, structureList[index].name);				
+				// FIXME: il n'y a aucun champs pour spécifier la catégorie...
+				var category = new Category(1, "acceuil", $("#multisites").val());
 				
-				employeeList.push(employee);
-				refreshQuickSelectionView(0); // We are async...
+				var newEmployee = new Employee(data.idEmployee,	data.name, data.lastname, data.password, category, structure, site);
 				
-				$("#popupCreateTitle").html("Créer un utilisateur");
-				$("#popupCreateMessage").html(" a été crée avec succès !");
-				$("#popupCreate").modal("show");
-				//e.preventDefault();
+				queryUpdateEmployee(newEmployee, true);
+				
+				console.log("[DEBUG] employee " + employee.lastname	+ " created successfully");		
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -498,10 +521,19 @@
 
 	$("#btnSave").on("click", function(e) {
 		var error = checkAllFields();
-
+		var index = 0;
+		
 		if (error === "noerror") {
 			if ( employeeSelected ) {
-				queryUpdateEmployee(employeeSelected);
+				employeeSelected.lastname = $("#inputLastName").val();
+				employeeSelected.name = $("#inputFirstName").val();
+				employeeSelected.password = $("#inputPassword").val();
+				index = $("#sites").val();				
+				employeeSelected.site = new Site(siteList[index].idSite, siteList[index].name, siteList[index].maxUnit);
+				employeeSelected.structure = new Structure(structureList[index].idStructure, structureList[index].name);
+				employeeSelected.category = new Category(categoryList[index].idCategory, categoryList[index].name, categoryList[index].sedentary);
+				
+				queryUpdateEmployee(employeeSelected, false);
 			} else {
 				var index = $("#sites").val();
 				var site = new Site(siteList[index].idSite, siteList[index].name, siteList[index].maxUnit);
@@ -517,14 +549,16 @@
 				var employee = {
 					lastname : $("#inputLastName").val(),
 					name : $("#inputFirstName").val(),
-					password : $("#inputPassword").val()
-					//structure : structure
-					//site : site
+					password : $("#inputPassword").val(),
 				};
 
 				queryCreateEmployee(employee);
 				
-
+				// FIXME: en placant le call ici le popup est toujours affiché même lorsque le create à échoué
+				$("#popupCreateTitle").html("Créer un utilisateur");
+				$("#popupCreateMessage").html(" a été crée avec succès !");
+				$("#popupCreate").modal("show");
+				e.preventDefault();
 			}
 		} else {
 			showPopupWithError(error);
