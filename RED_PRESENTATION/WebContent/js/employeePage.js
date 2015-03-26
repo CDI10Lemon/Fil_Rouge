@@ -17,6 +17,9 @@
 	"use strict";
 
 	var employeeList = [];
+	var siteList = [];
+	var categoryList = [];
+	var structureList = [];
 	var employeeSelected = null;
 
 	/**
@@ -30,6 +33,7 @@
 		queryAllEmployees();
 		queryAllSites();
 		queryAllStructures();
+		queryAllCategories();
 
 		// Disable KEY_ENTER on input #selectedEmployee to prevent deletion
 		$("#selectEmployee").on('keypress keydown keyup', function(e) {
@@ -91,31 +95,29 @@
 	 * @param employee Objet de type Employee
 	 */
 	function populateFieldsFromEmployee(employee) {
-		var id = 0;
-		var checked = false;
-		
 		$("#inputLastName").val(employee.lastname);
 		$("#inputFirstName").val(employee.name);
 		
-		id = 0;
 		if ( employee.site ) {
-			id = employee.site.id;
+			$("#sites").val(employee.site.idSite);
+		} else {
+			$("#sites").val(0);
 		}
-		$("#sites").val(id);
 		
-		id = 0;
 		if ( employee.structure ) {
-			id = employee.structure.id;
+			$("#structures").val(employee.structure.idStructure);
+		} else {
+			$("#structures").val(0);
 		}
-		$("#structures").val(id);
 		
 		$("#inputPassword").val(employee.password);
 		$("#inputConfirmPassword").val(employeeList.password);
 		
 		if ( employee.category && employee.category.sedentary ) {
-			checked = true;
+			$("#multisites").prop("checked", true);
+		} else {
+			$("#multisites").prop("checked", false);
 		}
-		$("#multisites").prop("checked", checked);
 	}
 
 	/**
@@ -140,14 +142,14 @@
 			return result;
 		}
 
-		if ( $("#sites").val() !== 0 ) {
+		if ( $("#sites").val() != 0 ) {
 			// TODO: regexp
 		} else {
 			result = "Aucun site est selectionné.<br/>Veuillez sélectionner un site";
 			return result;
 		}
 
-		if ( $("#structures").val() !== 0 ) {
+		if ( $("#structures").val() != 0 ) {
 			// TODO: regexp
 		} else {
 			result = "Aucune structure d'appartenance est selectionnée.<br/>Veuillez sélectionner une structure d'appartenance";
@@ -171,7 +173,11 @@
 	}
 
 	/**
+	 * showPopupWithError
 	 * 
+	 * Affiche uun popup d'erreur avec un message parametrable
+	 * 
+	 * @param error Le message d'erreur à afficher
 	 */
 	function showPopupWithError(error) {
 		$("#popupErrorMessage").html(error);
@@ -181,7 +187,7 @@
 	/**
 	 * disableButtons
 	 * 
-	 * Permet de changer l'état des 2 boutons
+	 * Permet de changer l'état des 2 boutons de la page (supprimer et enregistrer)
 	 * 
 	 * @param btnSave Indique si le bouton "Enregistrer" doit être désactivé
 	 * @param btnDelete Indique si le bouton "Supprimer" doit être désactivé
@@ -259,10 +265,14 @@
 			contentType : "application/json",
 		}).done( function(data) {
 			var $option;
-
+			var structure;
+			
 			for ( var index = 0; index < data.length; index++ ) {
 				$option = $("<option value=" + data[index].idStructure + ">" + data[index].name + "</option>");
 				$("#structures").append($option);
+				
+				structure = new Structure(data[index].idStructure,	data[index].name);
+				structureList.push(structure);
 			}
 
 			// Head of the selection is empty (at option tag of index zero)
@@ -281,6 +291,8 @@
 	 * Charge la liste de tous les sites
 	 */
 	function queryAllSites() {
+		siteList = [];
+		
 		$.ajax({
 			url : "http://localhost:8080/RED_WEBSERVICE/rest/site",
 			type : "GET",
@@ -288,10 +300,14 @@
 			contentType : "application/json",
 		}).done( function(data) {
 			var $option;
-
+			var site;
+			
 			for (var index = 0; index < data.length; index++) {
 				$option = $("<option value=" + data[index].idSite + ">"	+ data[index].name + "</option>");
 				$("#sites").append($option);
+				
+				site = new Site(data[index].idSite,	data[index].name, data[index].maxUnit);
+				siteList.push(site);
 			}
 
 			// Head of the selection is empty (at option tag of index zero)
@@ -303,7 +319,34 @@
 			// Action to do after the call of done or fail
 		});
 	}
-
+	
+	/**
+	 * queryAllCategories
+	 * 
+	 * Charge la liste de toutes les categories
+	 */
+	function queryAllCategories() {
+		categoryList = [];
+		
+		$.ajax({
+			url : "http://localhost:8080/RED_WEBSERVICE/rest/category",
+			type : "GET",
+			dataType : "json",
+			contentType : "application/json",
+		}).done( function(data) {
+			var category;
+			
+			for (var index = 0; index < data.length; index++) {
+				category = new Category(data[index].idCategory,	data[index].name, data[index].sedentary);
+				categoryList.push(category);
+			}
+		}).fail(function() {
+			// Handling errors here ...
+		}).always(function() {
+			// Action to do after the call of done or fail
+		});
+	}
+	
 	/**
 	 * queryDeleteEmployee
 	 * 
@@ -312,9 +355,9 @@
 	 * @param employee Objet de type Employee à supprimer
 	 */
 	function queryDeleteEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		if (employee && employee.idEmployee !== 0) {
 			$.ajax({
-				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.id,
+				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.idEmployee,
 				type : "DELETE",
 				dataType : "json",
 				contentType : "application/json",
@@ -340,16 +383,24 @@
 	 * @param employee Objet de type Employee à mettre à jour
 	 */
 	function queryUpdateEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		if (employee && employee.idEmployee !== 0) {
 			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
-				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.id,
+				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee/"	+ employee.idEmployee,
 				type : "PUT",
 				data : JSON.stringify(employee),
 				dataType : "json",
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee "	+ employee.lastname	+ " updated successfully");
+				
+				employeeSelected = null;
+				refreshQuickSelectionView(0); // We are async...
+				
+				$("#popupCreateTitle").html("Mettre à jour un utilisateur");
+				$("#popupCreateMessage").html(" a été mis à jour avec succès !");
+				$("#popupCreate").modal("show");
+				//e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -366,7 +417,7 @@
 	 * @param employee Objet de type Employee à mettre à jour
 	 */
 	function queryCreateEmployee(employee) {
-		if (employee && employee.id !== 0) {
+		//if (employee && employee.idEmployee === 0) {
 			// FIXME: les attributs null ne doivent pas être dans l'objet employee sous peine de plantage
 			$.ajax({
 				url : "http://localhost:8080/RED_WEBSERVICE/rest/employee",
@@ -376,16 +427,20 @@
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee " + employee.lastname	+ " created successfully");
+				
+				employeeList.push(employee);
+				refreshQuickSelectionView(0); // We are async...
+				
 				$("#popupCreateTitle").html("Créer un utilisateur");
 				$("#popupCreateMessage").html(" a été crée avec succès !");
 				$("#popupCreate").modal("show");
-				e.preventDefault();
+				//e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
 				// Action to do after the call of done or fail
 			});
-		}
+		//}
 	}
 
 	/*
@@ -444,83 +499,37 @@
 	$("#btnSave").on("click", function(e) {
 		var error = checkAllFields();
 
-		console.log(error);
-
 		if (error === "noerror") {
-			if ( $("#inputLastName").val() ) {
-				// TODO: regexp
+			if ( employeeSelected ) {
+				queryUpdateEmployee(employeeSelected);
 			} else {
-				result = "Le nom de l'utilisateur est manquant.<br/>Veuillez saisir le nom de l'utilisateur";
-				return result;
-			}
+				var index = $("#sites").val();
+				var site = new Site(siteList[index].idSite, siteList[index].name, siteList[index].maxUnit);
+				
+				index = $("#structures").val();
+				console.log("struc " + JSON.stringify(structureList[index]));
+				var structure = new Structure(structureList[index].idStructure, structureList[index].name);				
+				
+				// FIXME: il n'y a aucun champs pour spécifier la catégorie...
+				//var category = new Category(categoryList[index].idCategory, categoryList[index].name, categoryList[index].sedentary);
+				
+				//var employee = new Employee(null, $("#inputFirstName").val(), $("#inputLastName").val(), $("#inputPassword").val(), null, structure, site);
+				var employee = {
+					lastname : $("#inputLastName").val(),
+					name : $("#inputFirstName").val(),
+					password : $("#inputPassword").val()
+					//structure : structure
+					//site : site
+				};
 
-			if ( $("#inputFirstName").val() ) {
-				// TODO: regexp
-			} else {
-				result = "Le prénom de l'utilisateur est manquant.<br/>Veuillez saisir le prénom de l'utilisateur";
-				return result;
-			}
+				queryCreateEmployee(employee);
+				
 
-			if ( $("#sites").val() !== 0 ) {
-				// TODO: regexp
-			} else {
-				result = "Aucun site est selectionné.<br/>Veuillez sélectionner un site";
-				return result;
 			}
-
-			if ( $("#structures").val() !== 0 ) {
-				// TODO: regexp
-			} else {
-				result = "Aucune structure d'appartenance est selectionnée.<br/>Veuillez sélectionner une structure d'appartenance";
-				return result;
-			}
-
-			if ( $("#inputPassword").val() && $("#inputConfirmPassword").val() && ($("#inputPassword").val() === $("#inputConfirmPassword").val() ) ) {
-				// TODO: regexp
-			} else if ( !$("#inputPassword").val() ) {
-				result = "Le mot de passe est manquant.<br/>Veuillez saisir le mot de passe";
-				return result;
-			} else if ( !$("#inputConfirmPassword").val() ) {
-				result = "La confirmation du mot de passe est manquant.<br/>Veuillez saisir le confirmation du mot de passe";
-				return result;
-			} else if ( $("#inputPassword").val() !== $("#inputConfirmPassword").val() ) {
-				result = "La confirmation du mot de passe est différente du mot de passe<br/>Veuillez saisir à nouveau la confirmation du mot de passe";
-				return result;
-			}
-			
-			var name = $("#inputName").val();
-			var lastname = $("#inputLastName").val();
-			var password = $("#inputPassword").val();
-			
-			
-			if ( $("#inputLastName").val() ) {
-				site = new Site(data[index].site.idSite, data[index].site.name, data[index].site.maxUnit);
-			}
-
-			if ( data[index].site !== null ) {
-				category = new Category(data[index].category.idCategory, data[index].category.name, data[index].category.sedentary);
-			}
-			
-			if ( data[index].structure !== null ) {
-				structure = new Structure(data[index].structure.idStructure, data[index].structure.name);
-			}
-			
-			var employee = new Employee(0,	name, lastname, password, category, structure, site);
-			// TODO: le code ci dessous est call pat la methode ajax de creation lorsque l'opération est reussie
-			/*
-			$("#popupCreateTitle").html("Créer un utilisateur");
-			$("#popupCreateMessage").html(" a été crée avec succès !");
-			$("#popupCreate").modal("show");
-			e.preventDefault();
-			*/
-			queryCreateEmployee()
 		} else {
 			showPopupWithError(error);
 			e.preventDefault();
 		}
-		// TODO: ici soit queryCreateEmployee() soit queryUpdateEmployee(employeeSelected) un update est a faire lorsque employeeSelected !== null
-		// sinon c'est un creation
-
 	});
 
 	$("#btnDelete").on("click",	function(e) {
