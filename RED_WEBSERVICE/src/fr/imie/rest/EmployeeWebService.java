@@ -48,10 +48,7 @@ public class EmployeeWebService {
 		employee = employeeService.create(employee);
 		return Response.ok(employee).build();
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> 0abf9f504b0a1bc5e1aa841b2a1edcf021128a43
 	@PUT
 	@Path("/{id}")
 	public Response updateEmployee(Employee employee, @PathParam("id") Integer id) {

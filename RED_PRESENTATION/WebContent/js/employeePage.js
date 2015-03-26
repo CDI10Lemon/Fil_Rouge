@@ -11,7 +11,6 @@
  * - Messages d'erreurs pour les  controles de champs 
  * - Messages d'erreurs pour les accès au service REST
  * - Créer/update un utilisateur
- * - Popup
  */
 
 (function() {
@@ -120,7 +119,9 @@
 	}
 
 	/**
+	 * checkAllFields
 	 * 
+	 * Vérifie que tous les champs soient remplis et valide
 	 */
 	function checkAllFields() {
 		var result = "noerror";
@@ -223,7 +224,6 @@
 				
 				var employee = new Employee(data[index].idEmployee,	data[index].name, data[index].lastname, data[index].password, category, structure, site);
 				employeeList.push(employee);
-				console.log(employee);
 			}
 
 			employeeList.sort(function(itemA, itemB) {
@@ -240,7 +240,7 @@
 
 			refreshQuickSelectionView(0);
 		}).fail(function() {
-			// H event.preventDefault();andling errors here ...
+			// Handling errors here ...
 		}).always(function() {
 			// Action to do after the call of done or fail
 		});
@@ -320,6 +320,7 @@
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee "	+ employee.lastname + " deleted successfully");
+				
 				employeeList.splice(employeeList.indexOf(employee), 1);
 				employeeSelected = null;
 				refreshQuickSelectionView(0); // We are async...
@@ -375,6 +376,10 @@
 				contentType : "application/json",
 			}).done( function(data) {
 				console.log("[DEBUG] employee " + employee.lastname	+ " created successfully");
+				$("#popupCreateTitle").html("Créer un utilisateur");
+				$("#popupCreateMessage").html(" a été crée avec succès !");
+				$("#popupCreate").modal("show");
+				e.preventDefault();
 			}).fail(function() {
 				// Handling errors here ...
 			}).always(function() {
@@ -393,7 +398,7 @@
 		if ( $(this).val() ) {
 			// Populate the fields if the search string match with any employee fullname
 			for ( var index = 0; index < employeeList.length; index++ ) {
-				if (searchStr === employeeList[index].fullname().toLowerCase()) {
+				if ( searchStr === employeeList[index].fullname().toLowerCase() ) {
 					found = true;
 					employeeSelected = employeeList[index];// = true;
 					populateFieldsFromEmployee(employeeList[index]);
@@ -402,8 +407,7 @@
 				}
 			}
 
-			// Clear all fields if the search string differ from any
-			// employee fullname but previously selected
+			// Clear all fields if the search string differ from any employee fullname but previously selected
 			if (!found && employeeSelected) {
 				employeeSelected = null;// = false;
 				clearAllFields(false);
@@ -414,7 +418,7 @@
 			for ( var index = 0; index < employeeList.length; index++ ) {
 				var subStr = employeeList[index].fullname().toLowerCase().substring(0, searchStr.length);
 
-				if (subStr === searchStr) {
+				if ( subStr === searchStr ) {
 					refreshQuickSelectionView(index);
 					return;
 				}
@@ -427,7 +431,7 @@
 	});
 
 	// Delegated events have the advantage that they can process events from children elements that are added to the document at a later time
-	// In that case #employeeTable is created dynamically so the classic syntax/ $().keyup will not respond to the event callback
+	// In that case #employeeTable is created dynamically so the classic syntax $().keyup will not respond to the event callback
 	$("#autoCompletion").on("click", "#employeeTable td", function() {
 		var selectedRowIndex = $(this).attr("data-row");
 
@@ -443,11 +447,73 @@
 		console.log(error);
 
 		if (error === "noerror") {
+			if ( $("#inputLastName").val() ) {
+				// TODO: regexp
+			} else {
+				result = "Le nom de l'utilisateur est manquant.<br/>Veuillez saisir le nom de l'utilisateur";
+				return result;
+			}
+
+			if ( $("#inputFirstName").val() ) {
+				// TODO: regexp
+			} else {
+				result = "Le prénom de l'utilisateur est manquant.<br/>Veuillez saisir le prénom de l'utilisateur";
+				return result;
+			}
+
+			if ( $("#sites").val() !== 0 ) {
+				// TODO: regexp
+			} else {
+				result = "Aucun site est selectionné.<br/>Veuillez sélectionner un site";
+				return result;
+			}
+
+			if ( $("#structures").val() !== 0 ) {
+				// TODO: regexp
+			} else {
+				result = "Aucune structure d'appartenance est selectionnée.<br/>Veuillez sélectionner une structure d'appartenance";
+				return result;
+			}
+
+			if ( $("#inputPassword").val() && $("#inputConfirmPassword").val() && ($("#inputPassword").val() === $("#inputConfirmPassword").val() ) ) {
+				// TODO: regexp
+			} else if ( !$("#inputPassword").val() ) {
+				result = "Le mot de passe est manquant.<br/>Veuillez saisir le mot de passe";
+				return result;
+			} else if ( !$("#inputConfirmPassword").val() ) {
+				result = "La confirmation du mot de passe est manquant.<br/>Veuillez saisir le confirmation du mot de passe";
+				return result;
+			} else if ( $("#inputPassword").val() !== $("#inputConfirmPassword").val() ) {
+				result = "La confirmation du mot de passe est différente du mot de passe<br/>Veuillez saisir à nouveau la confirmation du mot de passe";
+				return result;
+			}
+			
+			var name = $("#inputName").val();
+			var lastname = $("#inputLastName").val();
+			var password = $("#inputPassword").val();
+			
+			
+			if ( $("#inputLastName").val() ) {
+				site = new Site(data[index].site.idSite, data[index].site.name, data[index].site.maxUnit);
+			}
+
+			if ( data[index].site !== null ) {
+				category = new Category(data[index].category.idCategory, data[index].category.name, data[index].category.sedentary);
+			}
+			
+			if ( data[index].structure !== null ) {
+				structure = new Structure(data[index].structure.idStructure, data[index].structure.name);
+			}
+			
+			var employee = new Employee(0,	name, lastname, password, category, structure, site);
 			// TODO: le code ci dessous est call pat la methode ajax de creation lorsque l'opération est reussie
+			/*
 			$("#popupCreateTitle").html("Créer un utilisateur");
 			$("#popupCreateMessage").html(" a été crée avec succès !");
 			$("#popupCreate").modal("show");
 			e.preventDefault();
+			*/
+			queryCreateEmployee()
 		} else {
 			showPopupWithError(error);
 			e.preventDefault();
@@ -478,7 +544,6 @@
 
 	$("#btnPopupCreateAcknowledge").on("click", function(e) {
 		$("#popupCreate").modal("hide");
-
 		clearAllFields(true);
 		disableButtons(false, true);
 	});
